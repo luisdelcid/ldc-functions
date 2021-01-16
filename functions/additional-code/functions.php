@@ -46,7 +46,7 @@ if(!function_exists('ldc_support_additional_code')){
     			] as $mode => $label){
     				register_post_type('ldc_' . $mode, [
     					'capability_type' => 'page',
-    					'labels' => ldc_post_type_labels('Additional ' . $label, 'Additional ' . $label),
+    					'labels' => ldc_post_type_labels('Additional ' . $label, 'Additional ' . $label, false),
     					'show_in_admin_bar' => false,
     					'show_in_menu' => 'themes.php',
     					'show_ui' => true,
