@@ -275,7 +275,7 @@ if(!function_exists('ldc_one')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_post_type_labels')){
-    function ldc_post_type_labels($singular = '', $plural = ''){
+    function ldc_post_type_labels($singular = '', $plural = '', $all = true){
     	if($singular and $plural){
     		return [
     			'name' => $plural,
@@ -290,7 +290,7 @@ if(!function_exists('ldc_post_type_labels')){
     			'not_found' => 'No ' . strtolower($plural) . ' found.',
     			'not_found_in_trash' => 'No ' . strtolower($plural) . ' found in Trash.',
     			'parent_item_colon' => 'Parent ' . $singular . ':',
-    			'all_items' => 'All ' . $plural,
+    			'all_items' => ($all ? 'All ' : '') . $plural,
     			'archives' => $singular . ' Archives',
     			'attributes' => $singular . ' Attributes',
     			'insert_into_item' => 'Insert into ' . strtolower($singular),
