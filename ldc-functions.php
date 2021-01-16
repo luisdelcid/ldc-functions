@@ -1,37 +1,35 @@
 <?php
-/**
- * Author: Luis del Cid
- * Author URI: https://luisdelcid.com
- * Description: A collection of useful functions for your WordPress theme's functions.php.
- * Domain Path:
- * License: GPL2
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Network:
- * Plugin Name: LDC Functions
- * Plugin URI: https://luisdelcid.com
- * Text Domain: ldc-functions
- * Version: 2019.11.22
- *
- */ // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*
+Author: Luis del Cid
+Author URI: https://github.com/luisdelcid
+Description: A collection of useful functions for your WordPress theme's functions.php.
+Domain Path:
+License: GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Network:
+Plugin Name: LDC Functions
+Plugin URI: https://github.com/luisdelcid/ldc-functions
+Text Domain: ldc-functions
+Version: 0.1.15
+*/
 
-	defined('ABSPATH') or die('No script kiddies please!');
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    require_once(plugin_dir_path(__FILE__) . 'includes/plugin-update-checker-4.8.1/plugin-update-checker.php');
-    Puc_v4_Factory::buildUpdateChecker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
-
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-	add_action('plugins_loaded', function(){
-        if(defined('LDC_Functions') or defined('LDC_Functions_Version')){
-            add_action('admin_notices', function(){
-				printf('<div class="notice notice-error"><p>LDC Functions already exists.</p></div>');
-			});
-			deactivate_plugins(plugin_basename(__FILE__));
-		} else {
-            define('LDC_Functions', __FILE__);
-			define('LDC_Functions_Version', '2019.11.22');
-            require_once(plugin_dir_path(LDC_Functions) . 'functions.php');
+if(defined('ABSPATH')){
+    foreach(glob(plugin_dir_path(__FILE__) . 'functions/*', GLOB_ONLYDIR) as $ldc_dir){
+        $ldc_file = $ldc_dir . '/functions.php';
+        if(file_exists($ldc_file)){
+            require_once($ldc_file);
         }
-	});
+    }
+    unset($ldc_dir);
+    unset($ldc_file);
+    ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
+    ldc_on('after_setup_theme', function(){
+        $file = get_stylesheet_directory() . '/ldc-functions.php';
+        if(file_exists($file)){
+            require_once($file);
+        }
+    });
+    ldc_on('plugins_loaded', function(){
+        do_action('ldc_functions');
+    });
+}
