@@ -19,7 +19,8 @@ if(!function_exists('ldc_support_additional_code')){
             ldc_one('admin_print_footer_scripts', function(){ ?>
     			<script>
     				jQuery(function($){
-    					if(typeof ace != 'undefined'){<?php
+    					if(typeof ace != 'undefined'){
+                            ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12');<?php
     						foreach(['css', 'javascript'] as $mode){ ?>
     							if($('#ldc_<?php echo $mode; ?>_editor').length){
     								var ldc_<?php echo $mode; ?>_editor = ace.edit('ldc_<?php echo $mode; ?>_editor');
