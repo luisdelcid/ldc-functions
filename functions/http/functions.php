@@ -88,9 +88,7 @@ if(!function_exists('ldc_seems_json')){
     function ldc_seems_json($str = ''){
         $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
         $str = trim($str);
-        $str = str_replace('{ ', '{', $str);
-        $str = str_replace(' }', '}', $str);
-        return (is_string($str) and (preg_match('/^\{\".*\"\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
+        return (is_string($str) and (preg_match('/^\{\s*\".*\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
     }
 }
 
