@@ -326,21 +326,24 @@ if(!function_exists('ldc_post_type_labels')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_signon_without_password')){
-    function ldc_signon_without_password($user_login = '', $remember = false){
+    function ldc_signon_without_password($username_or_email = '', $remember = false){
         if(is_user_logged_in()){
             return wp_get_current_user();
         } else {
-            $hook = ldc_on('authenticate', function($user = null, $username = ''){
+            $hook = ldc_on('authenticate', function($user = null, $username_or_email = ''){
                 if(is_null($user)){
-                    $user = get_user_by('login', $username);
+                    $user = get_user_by('login', $username_or_email);
                     if(!$user){
-                        return new WP_Error('invalid_username', __('Unknown username. Check again or try your email address.'));
+						$user = get_user_by('email', $username_or_email);
+	                    if(!$user){
+	                        return new WP_Error('does_not_exist', __('The requested user does not exist.'));
+	                    }
                     }
                 }
                 return $user;
             }, 10, 2);
             $user = wp_signon([
-                'user_login' => $user_login,
+                'user_login' => $username_or_email,
                 'user_password' => '',
                 'remember' => $remember,
             ]);

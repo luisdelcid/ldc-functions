@@ -20,7 +20,7 @@ if(!function_exists('ldc_prepare')){
 
 if(!function_exists('ldc_request')){
     function ldc_request($url = '', $args = []){
-        if(class_exists('\LDC_Request')){
+        if(!class_exists('\LDC_Request')){
             require_once(plugin_dir_path(__FILE__) . 'class-ldc-request.php');
         }
         return new LDC_Request($url, $args);
@@ -31,7 +31,7 @@ if(!function_exists('ldc_request')){
 
 if(!function_exists('ldc_response')){
     function ldc_response($response = null){
-        if(class_exists('\LDC_Response')){
+        if(!class_exists('\LDC_Response')){
             require_once(plugin_dir_path(__FILE__) . 'class-ldc-response.php');
         }
         return new LDC_Response($response);

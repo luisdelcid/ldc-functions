@@ -125,14 +125,6 @@ if(!function_exists('ldc_read_file_chunk')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_remove_accents')){
-	function ldc_remove_accents(){
-        ldc_one('sanitize_file_name', 'remove_accents');
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_solve_file_type_conflicts')){
 	function ldc_solve_file_type_conflicts(){
         ldc_one('wp_check_filetype_and_ext', function($wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime){
