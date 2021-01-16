@@ -18,6 +18,14 @@ if(!function_exists('ldc_prepare')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_remove_whitespaces')){
+    function ldc_remove_whitespaces($str = ''){
+        return trim(preg_replace('/[\r\n\t\s]+/', ' ', $str));
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_request')){
     function ldc_request($url = '', $args = []){
         if(!class_exists('\LDC_Request')){
@@ -86,9 +94,8 @@ if(!function_exists('ldc_sanitize_timeout')){
 
 if(!function_exists('ldc_seems_json')){
     function ldc_seems_json($str = ''){
-        $str = preg_replace('/[\r\n\t ]+/', ' ', $str);
-        $str = trim($str);
-        return (is_string($str) and (preg_match('/^\{\s*\".*\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
+        $str = ldc_remove_whitespaces($str);
+        return (is_string($str) and (preg_match('/^\{\s*\".+\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
     }
 }
 
