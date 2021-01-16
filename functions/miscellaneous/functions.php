@@ -90,6 +90,19 @@ if(!function_exists('ldc_clone_role')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_destroy_other_sessions')){
+    function ldc_destroy_other_sessions(){
+        ldc_one('init', function(){
+            if(is_user_logged_in()){
+                $sessions = WP_Session_Tokens::get_instance(get_current_user_id());
+                $sessions->destroy_others(wp_get_session_token());
+            }
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_format_function')){
 	function ldc_format_function($function_name = '', $args = []){
 		$str = '';
