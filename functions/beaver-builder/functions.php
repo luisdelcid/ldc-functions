@@ -99,7 +99,10 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
                 $custom_css_post_id = $mods['custom_css_post_id'];
                 unset($mods['custom_css_post_id']);
             }
-            if(ldc_md5($mods) == '1098625cbdfed9801fa6cea80b522d2a' or $hard){
+            if($hard or ldc_md5($mods) == '1098625cbdfed9801fa6cea80b522d2a'){
+                if($custom_css_post_id){
+                    $mods['custom_css_post_id'] = $custom_css_post_id;
+                }
                 $mods['fl-scroll-to-top'] = 'enable';
                 $mods['fl-framework'] = 'bootstrap-4';
                 $mods['fl-awesome'] = 'fa5';
@@ -152,11 +155,12 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
                 $mods['fl-body-line-height'] = 1.5;
                 $mods['fl-body-line-height_medium'] = 1.5;
                 $mods['fl-body-line-height_mobile'] = 1.5;
-                if($custom_css_post_id){
-                    $mods['custom_css_post_id'] = $custom_css_post_id;
-                }
+                $mods['fl-header-layout'] = 'none';
+                $mods['fl-fixed-header'] = 'hidden';
+                $mods['fl-footer-widgets-display'] = 'disabled';
+                $mods['fl-footer-layout'] = 'none';
                 update_option('theme_mods_' . get_option('stylesheet'), $mods);
-                return true;
+                return FLCustomizer::refresh_css();
             }
         }
         return false;
