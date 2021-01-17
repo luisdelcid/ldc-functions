@@ -6,12 +6,12 @@ if(!function_exists('ldc_support_additional_code')){
     function ldc_support_additional_code(){
         if(ldc_is_plugin_active('meta-box/meta-box.php')){
             ldc_one('admin_enqueue_scripts', function(){
-                if(ldc_current_screen_is('edit-ldc_css')){
+                if(ldc_current_screen_is('ldc_css') or ldc_current_screen_is('ldc_javascript')){
                     wp_enqueue_script('ace', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js', [], '1.4.12', true);
                 }
             });
             ldc_one('admin_print_footer_scripts', function(){
-                if(ldc_current_screen_is('edit-ldc_css')){ ?>
+                if(ldc_current_screen_is('ldc_css') or ldc_current_screen_is('ldc_javascript')){ ?>
         			<script>
         				jQuery(function($){
         					if(typeof ace != 'undefined'){
