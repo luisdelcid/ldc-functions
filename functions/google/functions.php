@@ -56,18 +56,12 @@ if(!function_exists('ldc_use_google_api')){
         if(class_exists('\Google_Client')){
             return true;
         }
-        $dir = ldc_upload_basedir() . '/google-api';
-        if(is_dir($dir)){
-            require_once($dir . '/vendor/autoload.php');
-            return true;
-        }
-        if(!wp_mkdir_p($dir)){
-            return false;
-        }
+        $basename = 'google-api-2.8.2-PHP';
         $url = '';
         $versions = ['7.4', '7.0', '5.6', '5.4'];
         foreach($versions as $version){
             if(is_php_version_compatible($version)){
+                $basename .= $version;
                 $url = 'https://github.com/googleapis/google-api-php-client/releases/download/v2.8.2/google-api-php-client-v2.8.2-PHP' . $version . '.zip';
                 break;
             }
@@ -75,23 +69,9 @@ if(!function_exists('ldc_use_google_api')){
         if(!$url){
             return false;
         }
-        $attachment_id = ldc_request($url)->download();
-        if(is_wp_error($attachment_id)){
-            return false;
-        }
-        if(!function_exists('get_filesystem_method')){
-            require_once(ABSPATH . 'wp-admin/includes/file.php');
-        }
-        $access_type = get_filesystem_method();
-        if($access_type != 'direct'){
-            return false;
-        }
-        if(!WP_Filesystem()){
-            return false;
-        }
-        $zip = get_attached_file($attachment_id);
-        $result = unzip_file($zip, $dir);
-        if(is_wp_error($result)){
+        $dir = ldc_upload_basedir() . '/' . $basename;
+        $result = ldc_download_and_unzip($dir, $url);
+        if(!$result){
             return false;
         }
         require_once($dir . '/vendor/autoload.php');

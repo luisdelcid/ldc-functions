@@ -2,6 +2,43 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_download_and_unzip')){
+    function ldc_download_and_unzip($dir = '', $url = ''){
+        $wp_upload_dir = wp_upload_dir();
+        if(strpos($dir, $wp_upload_dir['basedir']) !== 0){
+            return false;
+        }
+        if(is_dir($dir)){
+            return true;
+        }
+        if(!wp_mkdir_p($dir)){
+            return false;
+        }
+        $attachment_id = ldc_request($url)->download();
+        if(is_wp_error($attachment_id)){
+            return false;
+        }
+        if(!function_exists('get_filesystem_method')){
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+        }
+        $access_type = get_filesystem_method();
+        if($access_type != 'direct'){
+            return false;
+        }
+        if(!WP_Filesystem()){
+            return false;
+        }
+        $zip = get_attached_file($attachment_id);
+        $result = unzip_file($zip, $dir);
+        if(is_wp_error($result)){
+            return false;
+        }
+        return true;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_prepare')){
     function ldc_prepare(...$args){
         global $wpdb;
