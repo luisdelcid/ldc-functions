@@ -10,7 +10,7 @@ Network:
 Plugin Name: LDC Functions
 Plugin URI: https://github.com/luisdelcid/ldc-functions
 Text Domain: ldc-functions
-Version: 0.1.16.12
+Version: 0.1.16.13
 */
 
 if(defined('ABSPATH')){

@@ -90,12 +90,11 @@ if(!function_exists('ldc_bb_module')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_bb_reboot_default_styles')){
-    function ldc_bb_reboot_default_styles(){
+    function ldc_bb_reboot_default_styles($hard = false){
         $current_theme = wp_get_theme();
         if($current_theme->get('Name') == 'Beaver Builder Theme' or $current_theme->get('Template') == 'bb-theme'){
-            $defaults = FLCustomizer::_get_default_mods();
             $mods = get_theme_mods();
-            if(ldc_md5($defaults) == ldc_md5($mods)){
+            if(ldc_md5($mods) == '22724f0b72010cd448ef585df5ecd4f6' or $hard){
                 $mods['fl-scroll-to-top'] = 'enable';
                 $mods['fl-framework'] = 'bootstrap-4';
                 $mods['fl-awesome'] = 'fa5';
