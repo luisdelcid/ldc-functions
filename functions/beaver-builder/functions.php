@@ -160,7 +160,7 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
                 $mods['fl-footer-widgets-display'] = 'disabled';
                 $mods['fl-footer-layout'] = 'none';
                 update_option('theme_mods_' . get_option('stylesheet'), $mods);
-                return FLCustomizer::refresh_css();
+                return true;
             }
         }
         return false;

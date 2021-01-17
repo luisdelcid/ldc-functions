@@ -2,43 +2,39 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_enqueue_ace')){
-    function ldc_enqueue_ace(){
-        ldc_one('admin_enqueue_scripts', function(){
-            wp_enqueue_script('ace', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js', [], '1.4.12', true);
-        });
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_support_additional_code')){
     function ldc_support_additional_code(){
         if(ldc_is_plugin_active('meta-box/meta-box.php')){
-            ldc_enqueue_ace();
-            ldc_one('admin_print_footer_scripts', function(){ ?>
-    			<script>
-    				jQuery(function($){
-    					if(typeof ace != 'undefined'){
-                            ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12');<?php
-    						foreach(['css', 'javascript'] as $mode){ ?>
-    							if($('#ldc_<?php echo $mode; ?>_editor').length){
-    								var ldc_<?php echo $mode; ?>_editor = ace.edit('ldc_<?php echo $mode; ?>_editor');
-    								ldc_<?php echo $mode; ?>_editor.$blockScrolling = Infinity;
-    								ldc_<?php echo $mode; ?>_editor.setOptions({
-    									maxLines: 25,
-    									minLines: 5,
-    								});
-    								ldc_<?php echo $mode; ?>_editor.getSession().on('change', function(){
-    									$('#ldc_additional_<?php echo $mode; ?>').val(ldc_<?php echo $mode; ?>_editor.getSession().getValue()).trigger('change');
-    								});
-    								ldc_<?php echo $mode; ?>_editor.getSession().setMode('ace/mode/<?php echo $mode; ?>');
-    								ldc_<?php echo $mode; ?>_editor.getSession().setValue($('#ldc_additional_<?php echo $mode; ?>').val());
-    							}<?php
-    						} ?>
-    					}
-    				});
-    			</script><?php
+            ldc_one('admin_enqueue_scripts', function(){
+                if(ldc_current_screen_is('edit-ldc_css')){
+                    wp_enqueue_script('ace', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.js', [], '1.4.12', true);
+                }
+            });
+            ldc_one('admin_print_footer_scripts', function(){
+                if(ldc_current_screen_is('edit-ldc_css')){ ?>
+        			<script>
+        				jQuery(function($){
+        					if(typeof ace != 'undefined'){
+                                ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12');<?php
+        						foreach(['css', 'javascript'] as $mode){ ?>
+        							if($('#ldc_<?php echo $mode; ?>_editor').length){
+        								var ldc_<?php echo $mode; ?>_editor = ace.edit('ldc_<?php echo $mode; ?>_editor');
+        								ldc_<?php echo $mode; ?>_editor.$blockScrolling = Infinity;
+        								ldc_<?php echo $mode; ?>_editor.setOptions({
+        									maxLines: 25,
+        									minLines: 5,
+        								});
+        								ldc_<?php echo $mode; ?>_editor.getSession().on('change', function(){
+        									$('#ldc_additional_<?php echo $mode; ?>').val(ldc_<?php echo $mode; ?>_editor.getSession().getValue()).trigger('change');
+        								});
+        								ldc_<?php echo $mode; ?>_editor.getSession().setMode('ace/mode/<?php echo $mode; ?>');
+        								ldc_<?php echo $mode; ?>_editor.getSession().setValue($('#ldc_additional_<?php echo $mode; ?>').val());
+        							}<?php
+        						} ?>
+        					}
+        				});
+        			</script><?php
+                }
             });
             ldc_one('init', function(){
                 foreach([
