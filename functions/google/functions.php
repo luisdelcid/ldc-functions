@@ -74,7 +74,7 @@ if(!function_exists('ldc_use_google_api')){
             return false;
         }
         $dir = ldc_upload_basedir() . '/' . $basename;
-        $result = ldc_download_and_unzip($dir, $url);
+        $result = ldc_download_and_unzip($url, $dir);
         if(!$result){
             return false;
         }

@@ -2,8 +2,16 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_download')){
+    function ldc_download($url = '', $args = [], $parent = 0){
+        return ldc_request($url, $args)->download($parent);
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_download_and_unzip')){
-    function ldc_download_and_unzip($dir = '', $url = ''){
+    function ldc_download_and_unzip($url = '', $dir = ''){
         $wp_upload_dir = wp_upload_dir();
         if(strpos($dir, $wp_upload_dir['basedir']) !== 0){
             return false;

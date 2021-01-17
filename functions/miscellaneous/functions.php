@@ -196,6 +196,20 @@ if(!function_exists('ldc_is_post_revision_or_auto_draft')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_ksort_deep')){
+    function ldc_ksort_deep($data = []){
+        if(ldc_is_array_assoc($data)){
+            ksort($data);
+            foreach($data as $index => $item){
+                $data[$index] = ldc_ksort_deep($item);
+            }
+        }
+        return $data;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_md5')){
     function ldc_md5($data = ''){
         if(is_object($data)){
@@ -206,9 +220,7 @@ if(!function_exists('ldc_md5')){
 			}
         }
         if(is_array($data)){
-            if(ldc_is_array_assoc($data)){
-                ksort($data);
-            }
+            $data = ldc_ksort_deep($data);
             $data = maybe_serialize($data);
         }
 		return md5($data);
