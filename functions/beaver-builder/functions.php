@@ -94,7 +94,12 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
         $current_theme = wp_get_theme();
         if($current_theme->get('Name') == 'Beaver Builder Theme' or $current_theme->get('Template') == 'bb-theme'){
             $mods = get_theme_mods();
-            if(ldc_md5($mods) == '22724f0b72010cd448ef585df5ecd4f6' or $hard){
+            $custom_css_post_id = 0;
+            if(isset($mods['custom_css_post_id'])){
+                $custom_css_post_id = $mods['custom_css_post_id'];
+                unset($mods['custom_css_post_id']);
+            }
+            if(ldc_md5($mods) == '1098625cbdfed9801fa6cea80b522d2a' or $hard){
                 $mods['fl-scroll-to-top'] = 'enable';
                 $mods['fl-framework'] = 'bootstrap-4';
                 $mods['fl-awesome'] = 'fa5';
@@ -147,6 +152,9 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
                 $mods['fl-body-line-height'] = 1.5;
                 $mods['fl-body-line-height_medium'] = 1.5;
                 $mods['fl-body-line-height_mobile'] = 1.5;
+                if($custom_css_post_id){
+                    $mods['custom_css_post_id'] = $custom_css_post_id;
+                }
                 update_option('theme_mods_' . get_option('stylesheet'), $mods);
                 return true;
             }
