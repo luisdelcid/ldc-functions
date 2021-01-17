@@ -52,19 +52,23 @@ if(!function_exists('ldc_hide_recaptcha_badge')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_use_google_api')){
-    function ldc_use_google_api(){
+    function ldc_use_google_api($ver = '2.8.2'){
         if(class_exists('\Google_Client')){
             return true;
         }
-        $basename = 'google-api-2.8.2-PHP';
         $url = '';
-        $versions = ['7.4', '7.0', '5.6', '5.4'];
-        foreach($versions as $version){
-            if(is_php_version_compatible($version)){
-                $basename .= $version;
-                $url = 'https://github.com/googleapis/google-api-php-client/releases/download/v2.8.2/google-api-php-client-v2.8.2-PHP' . $version . '.zip';
+        switch($ver){
+            case '2.8.2':
+                $basename = 'google-api-2.8.2-PHP';
+                $php_versions = ['7.4', '7.0', '5.6', '5.4'];
+                foreach($php_versions as $php_version){
+                    if(is_php_version_compatible($php_version)){
+                        $basename .= $php_version;
+                        $url = 'https://github.com/googleapis/google-api-php-client/releases/download/v2.8.2/google-api-php-client-v2.8.2-PHP' . $php_version . '.zip';
+                        break;
+                    }
+                }
                 break;
-            }
         }
         if(!$url){
             return false;
