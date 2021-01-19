@@ -43,3 +43,9 @@
     background-color: #fff3cd;
     border-color: #ffecb5;
 }
+.wpcf7-not-valid-tip {
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}

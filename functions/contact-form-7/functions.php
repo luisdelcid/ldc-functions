@@ -2,14 +2,22 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_cf7_use_bootstrap_alerts')){
-    function ldc_cf7_use_bootstrap_alerts($ver = 4){
+if(!function_exists('ldc_cf7_disable_autop')){
+    function ldc_cf7_disable_autop(){
+        ldc_one('wpcf7_autop_or_not', '__return_false');
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_cf7_use_bootstrap_styles')){
+    function ldc_cf7_use_bootstrap_styles($ver = 4){
         ldc_one('wp_enqueue_scripts', function() use($ver){
             switch($ver){
                 case 4:
-                    $file = plugin_dir_path(__FILE__) . 'ldc-cf7-b4-alerts.css';
+                    $file = plugin_dir_path(__FILE__) . 'ldc-cf7-b4-styles.css';
                     $ver = filemtime($file);
-                    wp_enqueue_style('ldc-cf7-b4-alerts', plugin_dir_url(__FILE__) . 'ldc-cf7-b4-alerts.css', [], $ver);
+                    wp_enqueue_style('ldc-cf7-b4-styles', plugin_dir_url(__FILE__) . 'ldc-cf7-b4-styles.css', [], $ver);
                     break;
             }
         });
@@ -31,7 +39,7 @@ if(!function_exists('ldc_cf7_use_floating_labels')){
                     }, 500);
                 }, false);
             </script><?php
-        }, 1000);
+        });
         ldc_off('wpcf7_init', 'wpcf7_add_form_tag_text', 10, 0);
         ldc_one('wpcf7_init', function(){
         	wpcf7_add_form_tag(['text', 'text*', 'email', 'email*', 'url', 'url*', 'tel', 'tel*'], function($tag){
