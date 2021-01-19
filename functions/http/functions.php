@@ -12,7 +12,7 @@ if(!function_exists('ldc_download')){
 
 if(!function_exists('ldc_download_and_unzip')){
     function ldc_download_and_unzip($url = '', $dir = ''){
-        $wp_upload_dir = wp_upload_dir();
+        $wp_upload_dir = wp_get_upload_dir();
         if(strpos($dir, $wp_upload_dir['basedir']) !== 0){
             return false;
         }

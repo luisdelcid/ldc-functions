@@ -15,9 +15,9 @@ if(!function_exists('ldc_cf7_use_bootstrap_styles')){
         ldc_one('wp_enqueue_scripts', function() use($ver){
             switch($ver){
                 case 4:
-                    $file = plugin_dir_path(__FILE__) . 'ldc-cf7-b4-styles.css';
+                    $file = plugin_dir_path(__FILE__) . 'b4-styles.css';
                     $ver = filemtime($file);
-                    wp_enqueue_style('ldc-cf7-b4-styles', plugin_dir_url(__FILE__) . 'ldc-cf7-b4-styles.css', [], $ver);
+                    wp_enqueue_style('ldc-cf7-b4-styles', plugin_dir_url(__FILE__) . 'b4-styles.css', [], $ver);
                     break;
             }
         });

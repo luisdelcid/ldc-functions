@@ -404,7 +404,7 @@ if(!function_exists('ldc_signon_without_password')){
 
 if(!function_exists('ldc_upload_basedir')){
     function ldc_upload_basedir(){
-		$wp_upload_dir = wp_upload_dir();
+		$wp_upload_dir = wp_get_upload_dir();
         return $wp_upload_dir['basedir'] . '/ldc-functions';
     }
 }
@@ -413,7 +413,7 @@ if(!function_exists('ldc_upload_basedir')){
 
 if(!function_exists('ldc_upload_baseurl')){
     function ldc_upload_baseurl(){
-		$wp_upload_dir = wp_upload_dir();
+		$wp_upload_dir = wp_get_upload_dir();
         return $wp_upload_dir['baseurl'] . '/ldc-functions';
     }
 }

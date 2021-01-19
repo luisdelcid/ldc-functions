@@ -50,7 +50,7 @@ if(!class_exists('LDC_Request')){
                 'filename' => '',
                 'timeout' => MINUTE_IN_SECONDS,
             ]);
-            $wp_upload_dir = wp_upload_dir();
+            $wp_upload_dir = wp_get_upload_dir();
             if($this->args['filename']){
                 $filename = basename($this->args['filename']);
                 if(strpos($this->args['filename'], $wp_upload_dir['basedir']) !== 0){

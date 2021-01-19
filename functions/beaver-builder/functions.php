@@ -179,6 +179,10 @@ if(!function_exists('ldc_bb_remove_default_styles')){
             }
             return $paths;
         });
+        ldc_one('wp_enqueue_scripts', function(){
+            $ver = filemtime(plugin_dir_path(__FILE__) . 'remove.css');
+            wp_enqueue_style('ldc-bb-remove', plugin_dir_url(__FILE__) . 'remove.css', [], $ver);
+        });
     }
 }
 
