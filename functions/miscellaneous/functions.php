@@ -90,15 +90,29 @@ if(!function_exists('ldc_clone_role')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_current_screen_in')){
+	function ldc_current_screen_is($ids = []){
+		if(is_admin()){
+			if(function_exists('get_current_screen')){
+				$current_screen = get_current_screen();
+	            if($current_screen){
+					return in_array($current_screen->id, $ids);
+	            }
+			}
+        }
+        return false;
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_current_screen_is')){
 	function ldc_current_screen_is($id = ''){
 		if(is_admin()){
 			if(function_exists('get_current_screen')){
 				$current_screen = get_current_screen();
 	            if($current_screen){
-					if($current_screen->id == $id){
-						return true;
-					}
+					return ($current_screen->id == $id);
 	            }
 			}
         }

@@ -17,6 +17,7 @@
     height: 6.25rem;
     padding: .75rem;
     resize: none;
+    overflow: hidden;
 }
 
 .ldc-floating-labels select {
@@ -37,6 +38,7 @@
     cursor: text; /* Match the input under the label */
     border: 1px solid transparent;
     border-radius: .25rem;
+    transition: all .1s ease-in-out;
 }
 
 .ldc-floating-labels input::-webkit-input-placeholder,
