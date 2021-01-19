@@ -2,6 +2,22 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_cf7_use_bootstrap_alerts')){
+    function ldc_cf7_use_bootstrap_alerts($ver = 4){
+        ldc_one('wp_enqueue_scripts', function() use($ver){
+            switch($ver){
+                case 4:
+                    $file = plugin_dir_path(__FILE__) . 'ldc-cf7-b4-alerts.css';
+                    $ver = filemtime($file);
+                    wp_enqueue_style('ldc-cf7-b4-alerts', plugin_dir_url(__FILE__) . 'ldc-cf7-b4-alerts.css', [], $ver);
+                    break;
+            }
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_cf7_use_floating_labels')){
     function ldc_cf7_use_floating_labels(){
         ldc_enqueue_functions();
