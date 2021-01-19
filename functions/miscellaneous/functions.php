@@ -317,8 +317,11 @@ if(!function_exists('ldc_one')){
 		} else {
 			$md5 = md5($idx);
 		}
-		if(!in_array($md5, $hooks)){
-			$hooks[] = $md5;
+		if(!isset($hooks[$tag])){
+			$hooks[$tag] = [];
+		}
+		if(!in_array($md5, $hooks[$tag])){
+			$hooks[$tag][] = $md5;
 			return ldc_on($tag, $function_to_add, $priority, $accepted_args);
 		} else {
 			return $idx;
