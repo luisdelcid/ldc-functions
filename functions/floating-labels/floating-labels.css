@@ -3,14 +3,15 @@
 -------------------------------------------------- */
 
 .ldc-floating-labels {
-  position: relative;
-  margin-bottom: 1rem;
+    display: block;
+    position: relative;
+    margin-bottom: 1rem;
 }
 
 .ldc-floating-labels input,
 .ldc-floating-labels label {
-  height: 3.125rem;
-  padding: .75rem;
+    height: 3.125rem;
+    padding: .75rem;
 }
 
 .ldc-floating-labels > textarea {
@@ -21,8 +22,8 @@
 }
 
 .ldc-floating-labels select {
-  height: 3.125rem;
-  padding: .75rem;
+    height: 3.125rem;
+    padding: .75rem;
 }
 
 .ldc-floating-labels label {
