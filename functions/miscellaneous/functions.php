@@ -91,7 +91,7 @@ if(!function_exists('ldc_clone_role')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_current_screen_in')){
-	function ldc_current_screen_is($ids = []){
+	function ldc_current_screen_in($ids = []){
 		if(is_admin()){
 			if(function_exists('get_current_screen')){
 				$current_screen = get_current_screen();
