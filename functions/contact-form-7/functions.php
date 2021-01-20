@@ -36,7 +36,7 @@ if(!function_exists('ldc_cf7_use_floating_labels')){
                 document.addEventListener('wpcf7mailsent', function(event){
                     setTimeout(function(){
                         ldc_floating_labels();
-                    }, 500);
+                    }, 200);
                 }, false);
             </script><?php
         });

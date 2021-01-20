@@ -7,11 +7,11 @@ if(!function_exists('ldc_enqueue_bootstrap')){
         ldc_one('wp_enqueue_scripts', function() use($ver, $bundle){
             switch($ver){
                 case 4:
-                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css', [], '4.5.3');
+                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css', [], '4.5.3');
                     if($bundle){
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js', ['jquery'], '4.5.3', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js', ['jquery'], '4.5.3', true);
                     } else {
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js', ['jquery'], '4.5.3', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js', ['jquery'], '4.5.3', true);
                     }
                     break;
                 case 5:

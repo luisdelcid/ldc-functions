@@ -69,6 +69,17 @@ if(!function_exists('ldc_bb_fix_in_the_loop')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_bb_get_setting')){
+    function ldc_bb_get_setting($key = '', $default = ''){
+        if(get_template() == 'bb-theme'){
+            return FLTheme::get_setting($key, $default);
+        }
+        return $default;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_bb_module')){
     function ldc_bb_module($class_name = ''){
         if(!class_exists('\LDC_BB_Module')){
@@ -91,8 +102,7 @@ if(!function_exists('ldc_bb_module')){
 
 if(!function_exists('ldc_bb_reboot_default_styles')){
     function ldc_bb_reboot_default_styles($hard = false){
-        $current_theme = wp_get_theme();
-        if($current_theme->get('Name') == 'Beaver Builder Theme' or $current_theme->get('Template') == 'bb-theme'){
+        if(get_template() == 'bb-theme'){
             $mods = get_theme_mods();
             $custom_css_post_id = 0;
             if(isset($mods['custom_css_post_id'])){
@@ -173,16 +183,18 @@ if(!function_exists('ldc_bb_remove_default_styles')){
     function ldc_bb_remove_default_styles(){
         ldc_one('fl_theme_compile_less_paths', function($paths){
             foreach($paths as $index => $path){
-                if($path == FL_THEME_DIR . '/less/theme.less'){
-                    $paths[$index] = plugin_dir_path(__FILE__) . 'theme.less';
+                if($path == FL_THEME_DIR . '/less/theme-1.7.8.less'){
+                    $paths[$index] = plugin_dir_path(__FILE__) . 'theme-1.7.8.less';
                 }
             }
             return $paths;
         });
-        ldc_one('wp_enqueue_scripts', function(){
-            $ver = filemtime(plugin_dir_path(__FILE__) . 'remove.css');
-            wp_enqueue_style('ldc-bb-remove', plugin_dir_url(__FILE__) . 'remove.css', [], $ver);
-        });
+        if(get_template() == 'bb-theme'){
+            ldc_one('wp_enqueue_scripts', function(){
+                $ver = filemtime(plugin_dir_path(__FILE__) . 'remove.css');
+                wp_enqueue_style('ldc-bb-remove', plugin_dir_url(__FILE__) . 'remove.css', [], $ver);
+            });
+        }
     }
 }
 
