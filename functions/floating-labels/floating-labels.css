@@ -5,7 +5,6 @@
 .ldc-floating-labels {
     display: block;
     position: relative;
-    margin-bottom: 1rem;
 }
 
 .ldc-floating-labels input,

@@ -183,7 +183,7 @@ if(!function_exists('ldc_bb_remove_default_styles')){
     function ldc_bb_remove_default_styles(){
         ldc_one('fl_theme_compile_less_paths', function($paths){
             foreach($paths as $index => $path){
-                if($path == FL_THEME_DIR . '/less/theme-1.7.8.less'){
+                if($path == FL_THEME_DIR . '/less/theme.less'){
                     $paths[$index] = plugin_dir_path(__FILE__) . 'theme-1.7.8.less';
                 }
             }
@@ -216,6 +216,22 @@ if(!function_exists('ldc_bb_settings_form')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-settings-form.php');
 		}
         return new LDC_BB_Settings_Form($id, $title);
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_bb_support_google_sans')){
+    function ldc_bb_support_google_sans(){
+        ldc_one('fl_theme_get_google_json', function($json = []){
+        	$json[] = [
+                'Google Sans' => [
+                    'variants' => ['regular', 'italic', '500', '500italic', '700', '700italic'],
+                    'fallback' => 'sans-serif',
+                ],
+            ];
+            return $json;
+        });
     }
 }
 
