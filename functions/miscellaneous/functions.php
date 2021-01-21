@@ -402,6 +402,22 @@ if(!function_exists('ldc_signon_without_password')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_trim_excerpt')){
+	function ldc_trim_excerpt($text = '', $excerpt_length = 55, $excerpt_more = ' [&hellip;]'){
+	   $raw_excerpt = $text;
+	   $text = strip_shortcodes($text);
+	   $text = excerpt_remove_blocks($text);
+	   $text = apply_filters('the_content', $text);
+	   $text = str_replace(']]>', ']]&gt;', $text);
+	   $excerpt_length = (int) apply_filters('excerpt_length', $excerpt_length);
+	   $excerpt_more = apply_filters('excerpt_more', $excerpt_more);
+	   $text = wp_trim_words($text, $excerpt_length, $excerpt_more);
+	   return apply_filters('wp_trim_excerpt', $text, $raw_excerpt);
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_upload_basedir')){
     function ldc_upload_basedir(){
 		$wp_upload_dir = wp_get_upload_dir();
