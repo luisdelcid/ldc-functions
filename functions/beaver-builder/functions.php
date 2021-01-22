@@ -2,8 +2,8 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_bb_expand_templates')){
-    function ldc_bb_expand_templates(){
+if(!function_exists('ldc_bb_expand_nav_menu_templates')){
+    function ldc_bb_expand_nav_menu_templates(){
         ldc_one('walker_nav_menu_start_el', function($item_output, $item, $depth, $args){
             if($item->object == 'fl-builder-template'){
                 $item_output = $args->before;
@@ -69,12 +69,31 @@ if(!function_exists('ldc_bb_fix_in_the_loop')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_bb_get_bootstrap')){
+    function ldc_bb_get_bootstrap(){
+        $bootstrap = ldc_bb_get_setting('fl-framework');
+        if(in_array($bootstrap, ['base', 'bootstrap'])){
+            $bootstrap = 3;
+        } elseif(in_array($bootstrap, ['base-4', 'bootstrap-4'])){
+            $bootstrap = 4;
+        } else {
+            $bootstrap = 0;
+        }
+        return $bootstrap;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_bb_get_setting')){
     function ldc_bb_get_setting($key = '', $default = ''){
-        if(get_template() == 'bb-theme'){
-            return FLTheme::get_setting($key, $default);
+        if(class_exists('\FLTheme')){
+            return \FLTheme::get_setting($key, $default);
         }
-        return $default;
+        if(get_template() == 'bb-theme'){
+            return $default;
+        }
+        return '';
     }
 }
 
@@ -94,14 +113,14 @@ if(!function_exists('ldc_bb_module')){
         if(!class_exists('\LDC_BB_Module_Field')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-module-field.php');
 		}
-        return new LDC_BB_Module($class_name);
+        return new \LDC_BB_Module($class_name);
     }
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_bb_reboot_default_styles')){
-    function ldc_bb_reboot_default_styles($hard = false){
+if(!function_exists('ldc_bb_reboot_defaults')){
+    function ldc_bb_reboot_defaults($hard = false){
         if(get_template() == 'bb-theme'){
             $mods = get_theme_mods();
             $custom_css_post_id = 0;
@@ -174,7 +193,7 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
                 $mods['fl-fixed-header'] = 'hidden';
                 $mods['fl-footer-widgets-display'] = 'disabled';
                 $mods['fl-footer-layout'] = 'none';
-                update_option('theme_mods_' . get_option('stylesheet'), $mods);
+                update_option('theme_mods_' . get_stylesheet(), $mods);
                 return true;
             }
         }
@@ -184,8 +203,8 @@ if(!function_exists('ldc_bb_reboot_default_styles')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_bb_remove_default_styles')){
-    function ldc_bb_remove_default_styles(){
+if(!function_exists('ldc_bb_remove_defaults')){
+    function ldc_bb_remove_defaults(){
         ldc_one('fl_theme_compile_less_paths', function($paths){
             foreach($paths as $index => $path){
                 if($path == FL_THEME_DIR . '/less/theme.less'){
@@ -220,7 +239,7 @@ if(!function_exists('ldc_bb_settings_form')){
         if(!class_exists('\LDC_BB_Settings_Form')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-settings-form.php');
 		}
-        return new LDC_BB_Settings_Form($id, $title);
+        return new \LDC_BB_Settings_Form($id, $title);
     }
 }
 

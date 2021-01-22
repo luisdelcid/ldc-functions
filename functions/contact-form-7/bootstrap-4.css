@@ -1,13 +1,13 @@
 .wpcf7 form .wpcf7-response-output {
-    /* Reset */
+    /* reset */
     margin: 0;
-    /* Alert */
+    /* alert */
     position: relative;
     padding: 1rem 1rem;
     margin-bottom: 1rem;
     border: 1px solid transparent;
     border-radius: 0.25rem;
-    /* Blue */
+    /* blue / primary */
     color: #084298;
     background-color: #cfe2ff;
     border-color: #b6d4fe;
@@ -18,32 +18,33 @@
 	display: none;
 }
 .wpcf7 form.sent .wpcf7-response-output {
-	/* Green */
+	/* green / success */
     color: #0f5132;
     background-color: #d1e7dd;
     border-color: #badbcc;
 }
 .wpcf7 form.failed .wpcf7-response-output,
 .wpcf7 form.aborted .wpcf7-response-output {
-	/* Red */
+	/* red / danger */
     color: #842029;
     background-color: #f8d7da;
     border-color: #f5c2c7;
 }
 .wpcf7 form.spam .wpcf7-response-output {
-	/* Gray */
+	/* gray / secondary */
     color: #41464b;
     background-color: #e2e3e5;
     border-color: #d3d6d8;
 }
 .wpcf7 form.invalid .wpcf7-response-output,
 .wpcf7 form.unaccepted .wpcf7-response-output {
-	/* Yellow */
+	/* yellow / warning */
     color: #664d03;
     background-color: #fff3cd;
     border-color: #ffecb5;
 }
 .wpcf7-not-valid-tip {
+    /* invalid-feedback */
     width: 100%;
     margin-top: .25rem;
     font-size: 80%;

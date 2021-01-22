@@ -11,7 +11,7 @@ if(!function_exists('ldc_support_additional_code')){
                 }
             });
             ldc_one('admin_print_footer_scripts', function(){
-                if(ldc_current_screen_is('ldc_css') or ldc_current_screen_is('ldc_javascript')){ ?>
+                if(ldc_current_screen_in(['ldc_css', 'ldc_javascript'])){ ?>
         			<script>
         				jQuery(function($){
         					if(typeof ace != 'undefined'){
