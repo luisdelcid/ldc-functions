@@ -10,8 +10,8 @@ if(!function_exists('ldc_cf7_disable_autop')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_cf7_reboot_defaults')){
-    function ldc_cf7_reboot_defaults($bootstrap = 0){
+if(!function_exists('ldc_cf7_emulate_bootstrap')){
+    function ldc_cf7_emulate_bootstrap($bootstrap = 0){
         ldc_one('wp_enqueue_scripts', function() use($bootstrap){
             if(!$bootstrap){
                 $bootstrap = ldc_bb_get_bootstrap();

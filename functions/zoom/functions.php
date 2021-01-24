@@ -17,7 +17,7 @@ if(!function_exists('ldc_generate_zoom_jwt')){
             'iss' => $api_key,
             'exp' => time() + DAY_IN_SECONDS, // GMT time
         ];
-        ldc_support_jwt();
+        ldc_support_php_jwt();
         return \Firebase\JWT\JWT::encode($payload, $api_secret);
 	}
 }

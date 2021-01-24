@@ -2,8 +2,8 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_support_jwt')){
-    function ldc_support_jwt(){
+if(!function_exists('ldc_support_php_jwt')){
+    function ldc_support_php_jwt(){
         if(!class_exists('Firebase\JWT\BeforeValidException')){
 			require_once(plugin_dir_path(__FILE__) . 'php-jwt-5.2.0/src/BeforeValidException.php');
 		}

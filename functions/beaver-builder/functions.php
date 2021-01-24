@@ -2,6 +2,54 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_bb_add_bootstrap_colors')){
+    function ldc_bb_add_bootstrap_colors(){
+        ldc_one('customize_controls_print_footer_scripts', function(){ ?>
+            <script>
+                var bootstrap_colors = [
+                    '#007bff', // primary
+                    '#6c757d', // secondary
+                    '#28a745', // success
+                    '#17a2b8', // info
+                    '#ffc107', // warning
+                    '#dc3545', // danger
+                    '#f8f9fa', // light
+                    '#343a40', // dark
+                ];
+                jQuery(function($){
+                    $('.wp-picker-container').iris({
+                        mode: 'hsl',
+                        controls: {
+                            horiz: 'h', // square horizontal displays hue
+                            vert: 's', // square vertical displays saturdation
+                            strip: 'l' // slider displays lightness
+                        },
+                        palettes: bootstrap_colors,
+                    });
+                });
+            </script><?php
+        });
+        ldc_one('fl_builder_color_presets', function($colors){
+            $colors = array_map(function($color = ''){
+        		return '#' . ltrim($color, '#');
+        	}, $colors);
+        	$bootstrap_colors = [
+        		'#007bff', // primary
+        		'#6c757d', // secondary
+        		'#28a745', // success
+        		'#17a2b8', // info
+        		'#ffc107', // warning
+        		'#dc3545', // danger
+        		'#f8f9fa', // light
+        		'#343a40', // dark
+        	];
+        	return array_values(array_unique(array_merge($colors, $bootstrap_colors)));
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_bb_expand_nav_menu_templates')){
     function ldc_bb_expand_nav_menu_templates(){
         ldc_one('walker_nav_menu_start_el', function($item_output, $item, $depth, $args){
@@ -240,54 +288,6 @@ if(!function_exists('ldc_bb_settings_form')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-settings-form.php');
 		}
         return ldc_new('LDC_BB_Settings_Form', $id, $title);
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if(!function_exists('ldc_bb_support_bootstrap_colors')){
-    function ldc_bb_support_bootstrap_colors(){
-        ldc_one('customize_controls_print_footer_scripts', function(){ ?>
-            <script>
-                var bootstrap_colors = [
-                    '#007bff', // primary
-                    '#6c757d', // secondary
-                    '#28a745', // success
-                    '#17a2b8', // info
-                    '#ffc107', // warning
-                    '#dc3545', // danger
-                    '#f8f9fa', // light
-                    '#343a40', // dark
-                ];
-                jQuery(function($){
-                    $('.wp-picker-container').iris({
-                        mode: 'hsl',
-                        controls: {
-                            horiz: 'h', // square horizontal displays hue
-                            vert: 's', // square vertical displays saturdation
-                            strip: 'l' // slider displays lightness
-                        },
-                        palettes: bootstrap_colors,
-                    });
-                });
-            </script><?php
-        });
-        ldc_one('fl_builder_color_presets', function($colors){
-            $colors = array_map(function($color = ''){
-        		return '#' . ltrim($color, '#');
-        	}, $colors);
-        	$bootstrap_colors = [
-        		'#007bff', // primary
-        		'#6c757d', // secondary
-        		'#28a745', // success
-        		'#17a2b8', // info
-        		'#ffc107', // warning
-        		'#dc3545', // danger
-        		'#f8f9fa', // light
-        		'#343a40', // dark
-        	];
-        	return array_values(array_unique(array_merge($colors, $bootstrap_colors)));
-        });
     }
 }
 
