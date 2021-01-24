@@ -38,7 +38,7 @@ if(!function_exists('ldc_google_oauth_url')){
 if(!function_exists('ldc_hide_recaptcha_badge')){
     function ldc_hide_recaptcha_badge(){
         ldc_one('init', function(){
-            add_shortcode('ldc_hide_recaptcha_badge', function($atts = [], $content = ''){
+            add_shortcode('ldc_recaptcha_branding', function($atts = [], $content = ''){
                 return '<span class="ldc-hide-recaptcha-badge">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</span>';
             });
         });
