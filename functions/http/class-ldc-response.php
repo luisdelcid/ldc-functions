@@ -24,13 +24,9 @@ if(!class_exists('LDC_Response')){
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         protected function maybe_json_decode(){
-            if(ldc_seems_json($this->data)){
-                $this->data = json_decode($this->data, true);
-                if(json_last_error() != JSON_ERROR_NONE){
-                    $this->code = 500;
-                    $this->message = json_last_error_msg();
-                    $this->success = false;
-                }
+            $data = json_decode($this->data, true);
+            if(json_last_error() == JSON_ERROR_NONE){
+                $this->data = $data;
             }
         }
 
@@ -111,7 +107,7 @@ if(!class_exists('LDC_Response')){
             if(is_wp_error($this->raw_response)){
                 return $this->raw_response;
             } else {
-                return new WP_Error('ldc_response_error', $this->message, [
+                return ldc_new('WP_Error', 'ldc_response_error', $this->message, [
                     'status' => $this->code,
                 ]);
             }
@@ -120,7 +116,7 @@ if(!class_exists('LDC_Response')){
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public function to_wp_rest_response(){
-            return new WP_REST_Response($this->data, $this->code);
+            return ldc_new('WP_REST_Response', $this->data, $this->code);
         }
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

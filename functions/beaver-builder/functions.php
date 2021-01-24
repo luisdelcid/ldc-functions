@@ -101,19 +101,19 @@ if(!function_exists('ldc_bb_get_setting')){
 
 if(!function_exists('ldc_bb_module')){
     function ldc_bb_module($class_name = ''){
-        if(!class_exists('\LDC_BB_Module')){
+        if(!class_exists('LDC_BB_Module')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-module.php');
 		}
-        if(!class_exists('\LDC_BB_Module_Tab')){
+        if(!class_exists('LDC_BB_Module_Tab')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-module-tab.php');
 		}
-        if(!class_exists('\LDC_BB_Module_Section')){
+        if(!class_exists('LDC_BB_Module_Section')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-module-section.php');
 		}
-        if(!class_exists('\LDC_BB_Module_Field')){
+        if(!class_exists('LDC_BB_Module_Field')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-module-field.php');
 		}
-        return new \LDC_BB_Module($class_name);
+        return ldc_new('LDC_BB_Module', $class_name);
     }
 }
 
@@ -215,8 +215,8 @@ if(!function_exists('ldc_bb_remove_defaults')){
         });
         if(get_template() == 'bb-theme'){
             ldc_one('wp_enqueue_scripts', function(){
-                $ver = filemtime(plugin_dir_path(__FILE__) . 'remove.css');
-                wp_enqueue_style('ldc-bb-remove', plugin_dir_url(__FILE__) . 'remove.css', [], $ver);
+                $ver = filemtime(plugin_dir_path(__FILE__) . 'remove-defaults.css');
+                wp_enqueue_style('ldc-bb-remove', plugin_dir_url(__FILE__) . 'remove-defaults.css', [], $ver);
             });
         }
     }
@@ -236,33 +236,17 @@ if(!function_exists('ldc_bb_remove_presets')){
 
 if(!function_exists('ldc_bb_settings_form')){
     function ldc_bb_settings_form($id = '', $title = ''){
-        if(!class_exists('\LDC_BB_Settings_Form')){
+        if(!class_exists('LDC_BB_Settings_Form')){
 			require_once(plugin_dir_path(__FILE__) . 'class-ldc-bb-settings-form.php');
 		}
-        return new \LDC_BB_Settings_Form($id, $title);
+        return ldc_new('LDC_BB_Settings_Form', $id, $title);
     }
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_bb_support_google_sans')){
-    function ldc_bb_support_google_sans(){
-        ldc_one('fl_theme_get_google_json', function($json = []){
-        	$json[] = [
-                'Google Sans' => [
-                    'variants' => ['regular', 'italic', '500', '500italic', '700', '700italic'],
-                    'fallback' => 'sans-serif',
-                ],
-            ];
-            return $json;
-        });
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if(!function_exists('ldc_bb_use_bootstrap_colors')){
-    function ldc_bb_use_bootstrap_colors(){
+if(!function_exists('ldc_bb_support_bootstrap_colors')){
+    function ldc_bb_support_bootstrap_colors(){
         ldc_one('customize_controls_print_footer_scripts', function(){ ?>
             <script>
                 var bootstrap_colors = [
@@ -289,17 +273,36 @@ if(!function_exists('ldc_bb_use_bootstrap_colors')){
             </script><?php
         });
         ldc_one('fl_builder_color_presets', function($colors){
-            $bootstrap_colors = [
-                '007bff', // primary
-                '6c757d', // secondary
-                '28a745', // success
-                '17a2b8', // info
-                'ffc107', // warning
-                'dc3545', // danger
-                'f8f9fa', // light
-                '343a40', // dark
+            $colors = array_map(function($color = ''){
+        		return '#' . ltrim($color, '#');
+        	}, $colors);
+        	$bootstrap_colors = [
+        		'#007bff', // primary
+        		'#6c757d', // secondary
+        		'#28a745', // success
+        		'#17a2b8', // info
+        		'#ffc107', // warning
+        		'#dc3545', // danger
+        		'#f8f9fa', // light
+        		'#343a40', // dark
+        	];
+        	return array_values(array_unique(array_merge($colors, $bootstrap_colors)));
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_bb_support_google_sans')){
+    function ldc_bb_support_google_sans(){
+        ldc_one('fl_theme_get_google_json', function($json = []){
+        	$json[] = [
+                'Google Sans' => [
+                    'variants' => ['regular', 'italic', '500', '500italic', '700', '700italic'],
+                    'fallback' => 'sans-serif',
+                ],
             ];
-            return array_values(array_unique(array_merge($colors, $bootstrap_colors)));
+            return $json;
         });
     }
 }

@@ -53,7 +53,7 @@ if(!class_exists('LDC_BB_Module_Tab')){
     				wp_die('Section "' . esc_html($id) . '" does not exist.');
     			}
     		} else {
-    			$this->sections[$id] = new \LDC_BB_Module_Section($id, $title, $this->prefix);
+    			$this->sections[$id] = ldc_new('LDC_BB_Module_Section', $id, $title, $this->prefix);
     			return $this->sections[$id];
     		}
     	}

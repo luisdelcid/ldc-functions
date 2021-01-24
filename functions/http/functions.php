@@ -63,17 +63,9 @@ if(!function_exists('ldc_prepare')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_remove_whitespaces')){
-    function ldc_remove_whitespaces($str = ''){
-        return trim(preg_replace('/[\r\n\t\s]+/', ' ', $str));
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_request')){
     function ldc_request($url = '', $args = []){
-        if(!class_exists('\LDC_Request')){
+        if(!class_exists('LDC_Request')){
             require_once(plugin_dir_path(__FILE__) . 'class-ldc-request.php');
         }
         return new LDC_Request($url, $args);
@@ -84,7 +76,7 @@ if(!function_exists('ldc_request')){
 
 if(!function_exists('ldc_response')){
     function ldc_response($response = null){
-        if(!class_exists('\LDC_Response')){
+        if(!class_exists('LDC_Response')){
             require_once(plugin_dir_path(__FILE__) . 'class-ldc-response.php');
         }
         return new LDC_Response($response);
@@ -137,15 +129,6 @@ if(!function_exists('ldc_sanitize_timeout')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_seems_json')){
-    function ldc_seems_json($str = ''){
-        $str = ldc_remove_whitespaces($str);
-        return (is_string($str) and (preg_match('/^\{\s*\".+\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_seems_response')){
     function ldc_seems_response($response = []){
         return ldc_array_keys_exist(['code', 'data', 'message', 'success'], $response);
@@ -157,7 +140,7 @@ if(!function_exists('ldc_seems_response')){
 if(!function_exists('ldc_seems_successful')){
     function ldc_seems_successful($code = 0){
         if(!is_numeric($code)){
-            if($code instanceof \LDC_Response){
+            if($code instanceof LDC_Response){
                 $code = $code->code;
             } else {
                 return false;
@@ -173,7 +156,7 @@ if(!function_exists('ldc_seems_successful')){
 
 if(!function_exists('ldc_seems_wp_http_requests_response')){
     function ldc_seems_wp_http_requests_response($response = []){
-        return (ldc_array_keys_exist(['headers', 'body', 'response', 'cookies', 'filename', 'http_response'], $response) and ($response['http_response'] instanceof \WP_HTTP_Requests_Response));
+        return (ldc_array_keys_exist(['headers', 'body', 'response', 'cookies', 'filename', 'http_response'], $response) and ($response['http_response'] instanceof WP_HTTP_Requests_Response));
     }
 }
 

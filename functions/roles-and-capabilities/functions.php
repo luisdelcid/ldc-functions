@@ -33,8 +33,21 @@ if(!function_exists('ldc_hide_others_posts')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_hide_site')){
-    function ldc_hide_site($capability = 'read', $exclude = []){
+if(!function_exists('ldc_hide_the_dashboard')){
+    function ldc_hide_the_dashboard($capability = 'edit_posts'){
+        ldc_one('admin_init', function() use($capability){
+            if(!wp_doing_ajax() and !current_user_can($capability)){
+                wp_safe_redirect(home_url());
+                exit;
+            }
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_hide_the_front_end')){
+    function ldc_hide_the_front_end($capability = 'read', $exclude = []){
         ldc_one('template_redirect', function() use($capability, $exclude){
             if(is_front_page() and in_array('front_page', $exclude)){
                 return;
@@ -51,19 +64,6 @@ if(!function_exists('ldc_hide_site')){
                 if(!current_user_can($capability)){
                     wp_die('<h1>' . __('You need a higher level of permission.') . '</h1>' . '<p>' . __('Sorry, you are not allowed to access this page.') . '</p>', 403);
                 }
-            }
-        });
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if(!function_exists('ldc_hide_the_dashboard')){
-    function ldc_hide_the_dashboard($capability = 'edit_posts'){
-        ldc_one('admin_init', function() use($capability){
-            if(!wp_doing_ajax() and !current_user_can($capability)){
-                wp_safe_redirect(home_url());
-                exit;
             }
         });
     }

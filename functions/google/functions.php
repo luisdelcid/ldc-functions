@@ -13,7 +13,7 @@ if(!function_exists('ldc_google_oauth_url')){
             $redirect_to = $_GET['redirect_to'];
         }
         $redirect_to = wp_http_validate_url($redirect_to);
-        if($client instanceof \Google_Client){
+        if($client instanceof Google_Client){
             $client->addScope('email');
             $client->addScope('profile');
             $client->setRedirectUri(site_url('ldc-google-oauth'));
@@ -51,9 +51,9 @@ if(!function_exists('ldc_hide_recaptcha_badge')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_use_google_api')){
-    function ldc_use_google_api($ver = '2.8.2'){
-        if(class_exists('\Google_Client')){
+if(!function_exists('ldc_support_google_api')){
+    function ldc_support_google_api($ver = '2.8.2'){
+        if(class_exists('Google_Client')){
             return true;
         }
         $url = '';
@@ -85,8 +85,8 @@ if(!function_exists('ldc_use_google_api')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_use_google_oauth')){
-    function ldc_use_google_oauth($client = null, $args = []){
+if(!function_exists('ldc_support_google_oauth')){
+    function ldc_support_google_oauth($client = null, $args = []){
         ldc_one('template_redirect', function() use($client, $args){
             global $wp;
             if($wp->request != 'ldc-google-oauth'){
@@ -98,7 +98,7 @@ if(!function_exists('ldc_use_google_oauth')){
                 'users_can_register' => apply_filters('ldc_google_oauth_users_can_register', get_option('users_can_register')),
             ], $args, 'ldc_google_oauth_args');
             $url = $args['home_url'];
-            if($client instanceof \Google_Client){
+            if($client instanceof Google_Client){
                 $referer = wp_get_raw_referer();
                 if($referer){
                     if(wp_parse_url($referer, PHP_URL_HOST) == 'accounts.google.com'){
@@ -106,11 +106,11 @@ if(!function_exists('ldc_use_google_oauth')){
                             if(isset($_GET['code'])){
                                 $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
                                 if(array_key_exists('error', $token)){
-                                    $error = new WP_Error($token['error'],$token['error_description']);
+                                    $error = ldc_new('WP_Error', $token['error'],$token['error_description']);
                                     wp_die($error);
                                 }
                                 $client->setAccessToken($token);
-                                $oauth = new \Google_Service_Oauth2($client);
+                                $oauth = ldc_new('Google_Service_Oauth2', $client);
                                 $userinfo = $oauth->userinfo->get();
                                 $state = isset($_GET['state']) ? wp_http_validate_url(urldecode($_GET['state'])) : false;
                                 if($state){
@@ -142,7 +142,7 @@ if(!function_exists('ldc_use_google_oauth')){
                                             do_action('ldc_google_oauth_login', $user_id, $userinfo);
                                         }
                                     } else {
-                                        $error = new WP_Error('invalid_username', __('Unknown username. Check again or try your email address.'));
+                                        $error = ldc_new('WP_Error', 'invalid_username', __('Unknown username. Check again or try your email address.'));
                                         wp_die($error);
                                     }
                                 }
@@ -155,7 +155,7 @@ if(!function_exists('ldc_use_google_oauth')){
             }
             wp_safe_redirect($url);
             exit;
-        });
+        }, 9);
     }
 }
 

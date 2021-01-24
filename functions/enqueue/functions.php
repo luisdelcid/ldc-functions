@@ -71,17 +71,20 @@ if(!function_exists('ldc_enqueue_fontawesome_kit')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_enqueue_functions')){
-    function ldc_enqueue_functions($admin = false){
+    function ldc_enqueue_functions($context = 'front-end'){
         $file = plugin_dir_path(__FILE__) . 'functions.js';
         $ver = filemtime($file);
-        if($admin){
-            ldc_one('admin_enqueue_scripts', function() use($ver){
-                wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
-            });
-        } else {
-            ldc_one('wp_enqueue_scripts', function() use($ver){
-                wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
-            });
+        switch($context){
+            case 'admin':
+                ldc_one('admin_enqueue_scripts', function() use($ver){
+                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
+                });
+                break;
+            case 'front-end':
+                ldc_one('wp_enqueue_scripts', function() use($ver){
+                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
+                });
+                break;
         }
     }
 }

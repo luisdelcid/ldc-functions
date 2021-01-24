@@ -245,7 +245,7 @@ if(!function_exists('ldc_ksort_deep')){
 if(!function_exists('ldc_md5')){
     function ldc_md5($data = ''){
         if(is_object($data)){
-			if($data instanceof \Closure){
+			if($data instanceof Closure){
 				return ldc_md5_closure($data);
 			} else {
 				$data = json_decode(wp_json_encode($data), true);
@@ -367,6 +367,23 @@ if(!function_exists('ldc_post_type_labels')){
     		];
     	}
     	return [];
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_remove_whitespaces')){
+    function ldc_remove_whitespaces($str = ''){
+        return trim(preg_replace('/[\r\n\t\s]+/', ' ', $str));
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_seems_json')){
+    function ldc_seems_json($str = ''){
+        $str = ldc_remove_whitespaces($str);
+        return (is_string($str) and (preg_match('/^\{\s*\".+\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
     }
 }
 

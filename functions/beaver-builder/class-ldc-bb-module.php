@@ -53,7 +53,7 @@ if(!class_exists('LDC_BB_Module')){
 
     	public function tab($id = '', $title = ''){
     		if($title){
-    			$this->tabs[$id] = new \LDC_BB_Module_Tab($id, $title, $this->prefix);
+    			$this->tabs[$id] = ldc_new('LDC_BB_Module_Tab', $id, $title, $this->prefix);
     			return $this->tabs[$id];
     		} else {
     			if(isset($this->tabs[$id])){

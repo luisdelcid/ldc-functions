@@ -10,11 +10,29 @@ if(!function_exists('ldc_cf7_disable_autop')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_cf7_reboot_defaults')){
+    function ldc_cf7_reboot_defaults($bootstrap = 0){
+        ldc_one('wp_enqueue_scripts', function() use($bootstrap){
+            if(!$bootstrap){
+                $bootstrap = ldc_bb_get_bootstrap();
+            }
+            switch($bootstrap){
+                case 4:
+                    $ver = filemtime(plugin_dir_path(__FILE__) . 'bootstrap-4.css');
+                    wp_enqueue_style('ldc-cf7-bootstrap-4', plugin_dir_url(__FILE__) . 'bootstrap-4.css', [], $ver);
+                    break;
+            }
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_cf7_support_floating_labels')){
     function ldc_cf7_support_floating_labels(){
         ldc_enqueue_functions();
         ldc_support_floating_labels();
-        ldc_use_simple_html_dom();
+        ldc_support_simple_html_dom();
 		ldc_one('wp_print_footer_scripts', function(){ ?>
             <script id="ldc-cf7-support-floating-labels">
                 document.addEventListener('wpcf7mailsent', function(event){
@@ -106,24 +124,6 @@ if(!function_exists('ldc_cf7_support_floating_labels')){
         		'name-attr' => true,
         	]);
         }, 10, 0);
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if(!function_exists('ldc_cf7_use_bootstrap')){
-    function ldc_cf7_use_bootstrap($bootstrap = 0){
-        ldc_one('wp_enqueue_scripts', function() use($bootstrap){
-            if(!$bootstrap){
-                $bootstrap = ldc_bb_get_bootstrap();
-            }
-            switch($bootstrap){
-                case 4:
-                    $ver = filemtime(plugin_dir_path(__FILE__) . 'bootstrap-4.css');
-                    wp_enqueue_style('ldc-cf7-bootstrap-4', plugin_dir_url(__FILE__) . 'bootstrap-4.css', [], $ver);
-                    break;
-            }
-        });
     }
 }
 

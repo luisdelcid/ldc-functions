@@ -27,7 +27,7 @@ if(!class_exists('LDC_BB_Module_Section')){
 
     	public function field($id = '', $field = []){
     		if($field){
-    			$this->fields[$id] = new \LDC_BB_Module_Field($id, $field, $this->prefix);
+    			$this->fields[$id] = ldc_new('LDC_BB_Module_Field', $id, $field, $this->prefix);
     			return $this->fields[$id];
     		} else {
     			if(isset($this->fields[$id])){
