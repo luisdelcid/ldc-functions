@@ -46,8 +46,8 @@ if(!function_exists('ldc_hide_the_dashboard')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_hide_the_front_end')){
-    function ldc_hide_the_front_end($capability = 'read', $exclude = []){
+if(!function_exists('ldc_hide_the_frontend')){
+    function ldc_hide_the_frontend($capability = 'read', $exclude = []){
         ldc_one('template_redirect', function() use($capability, $exclude){
             if(is_front_page() and in_array('front_page', $exclude)){
                 return;
