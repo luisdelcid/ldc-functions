@@ -2,17 +2,17 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_admin_search_meta')){
-    function ldc_admin_search_meta(){
-        ldc_admin_search_post_meta();
-        ldc_admin_search_user_meta();
+if(!function_exists('ldc_support_admin_search_meta')){
+    function ldc_support_admin_search_meta(){
+        ldc_support_admin_search_post_meta();
+        ldc_support_admin_search_user_meta();
     }
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_admin_search_post_meta')){
-    function ldc_admin_search_post_meta(){
+if(!function_exists('ldc_support_admin_search_post_meta')){
+    function ldc_support_admin_search_post_meta(){
         ldc_one('posts_groupby', function($groupby){
             global $pagenow, $wpdb;
             if(is_admin() and $pagenow === 'edit.php' and is_search()){
@@ -58,8 +58,8 @@ if(!function_exists('ldc_admin_search_post_meta')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_admin_search_user_meta')){
-    function ldc_admin_search_user_meta(){
+if(!function_exists('ldc_support_admin_search_user_meta')){
+    function ldc_support_admin_search_user_meta(){
         ldc_one('users_pre_query', function($results, $user_query){
             global $pagenow, $wpdb;
             if(is_admin() and $pagenow === 'users.php' and $user_query->get('search') and is_null($user_query->results)){

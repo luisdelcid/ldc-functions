@@ -2,8 +2,8 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_custom_login_logo')){
-    function ldc_custom_login_logo($attachment_id = 0){
+if(!function_exists('ldc_use_custom_login_logo')){
+    function ldc_use_custom_login_logo($attachment_id = 0){
         ldc_one('login_enqueue_scripts', function() use($attachment_id){
             if(wp_attachment_is_image($attachment_id)){
                 $custom_logo = wp_get_attachment_image_src($attachment_id, 'medium'); ?>
@@ -23,8 +23,8 @@ if(!function_exists('ldc_custom_login_logo')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_local_login_header')){
-    function ldc_local_login_header(){
+if(!function_exists('ldc_use_local_login_header')){
+    function ldc_use_local_login_header(){
 		ldc_one('login_headertext', function($login_headertext){
 			return get_option('blogname');
 		});

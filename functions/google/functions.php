@@ -9,6 +9,9 @@
 
 if(!function_exists('ldc_google_oauth_url')){
     function ldc_google_oauth_url($client = null, $redirect_to = ''){
+        if(!$client){
+            $client = ldc_new_google_client();
+        }
         if(!$redirect_to and isset($_GET['redirect_to'])){
             $redirect_to = $_GET['redirect_to'];
         }
@@ -46,6 +49,25 @@ if(!function_exists('ldc_hide_recaptcha_badge')){
                 }
             </style><?php
         });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_new_google_client')){
+    function ldc_new_google_client($config = []){
+        $client_id = (defined('LDC_GOOGLE_OAUTH_CLIENT_ID') ? LDC_GOOGLE_OAUTH_CLIENT_ID : '');
+        $client_secret = (defined('LDC_GOOGLE_OAUTH_CLIENT_SECRET') ? LDC_GOOGLE_OAUTH_CLIENT_SECRET : '');
+        if($client_id and $client_secret){
+            ldc_support_google_api();
+            $client = ldc_new('Google_Client', $config);
+            if($client){
+                $client->setClientId($client_id);
+                $client->setClientSecret($client_secret);
+                return $client;
+            }
+        }
+        return null;
     }
 }
 
@@ -91,6 +113,9 @@ if(!function_exists('ldc_support_google_oauth')){
             global $wp;
             if($wp->request != 'ldc-google-oauth'){
                 return;
+            }
+            if(!$client){
+                $client = ldc_new_google_client();
             }
             $args = shortcode_atts([
                 'home_url' => apply_filters('ldc_google_oauth_home_url', home_url()),
