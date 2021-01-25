@@ -1,0 +1,30 @@
+p.rwmb-error {
+	color: #dc3545 !important;
+	margin: .25rem 0 0 !important;
+	font-size: 80%;
+
+}
+input.rwmb-error.rwmb-error,
+textarea.rwmb-error,
+select.rwmb-error {
+	border-color: #ced4da !important;
+	background: #fff !important;
+}
+.rwmb-field:not(:last-of-type){
+    margin: 0 0 1rem !important;
+}
+div.rwmb-confirmation,
+div.rwmb-error,
+#rwmb-validation-message {
+    padding: .75rem 1.25rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+}
+div.rwmb-confirmation {
+    border-color: #c3e6cb !important;
+    background-color: #d4edda !important;
+    color: #155724 !important;
+}
+.rwmb-button {
+    margin: 1rem .5rem 0 0 !important;
+}
