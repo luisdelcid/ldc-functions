@@ -20,6 +20,16 @@ if(!function_exists('ldc_mb_emulate_bootstrap')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_mb_enqueue_jquery_validation_messages_es')){
+    function ldc_mb_enqueue_jquery_validation_messages_es(){
+        ldc_one('rwmb_enqueue_scripts', function(){
+            wp_enqueue_script('jquery-validation-messages-es', 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/localization/messages_es.min.js', ['rwmb-validation'], '1.19.3', true);
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_mb_enqueue_select2_full')){
     function ldc_mb_enqueue_select2_full(){
         ldc_one('rwmb_enqueue_scripts', function(){
