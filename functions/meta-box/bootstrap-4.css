@@ -4,7 +4,7 @@ p.rwmb-error {
 	font-size: 80%;
 
 }
-input.rwmb-error.rwmb-error,
+input.rwmb-error,
 textarea.rwmb-error,
 select.rwmb-error {
 	border-color: #ced4da !important;
