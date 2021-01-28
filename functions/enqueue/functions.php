@@ -29,6 +29,17 @@ if(!function_exists('ldc_enqueue_bootstrap')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_enqueue_bs_custom_file_input')){
+    function ldc_enqueue_bs_custom_file_input(){
+        ldc_one('wp_enqueue_scripts', function(){
+            wp_enqueue_script('bs-custom-file-input', 'https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js', ['jquery'], '1.3.4', true);
+			wp_add_inline_script('bs-custom-file-input', 'jQuery(function(){ bsCustomFileInput.init(); });');
+        });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_enqueue_fontawesome')){
     function ldc_enqueue_fontawesome($ver = 5, $pro = false){
         ldc_one('wp_enqueue_scripts', function() use($ver, $pro){
