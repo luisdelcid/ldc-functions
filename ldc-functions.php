@@ -10,7 +10,7 @@ Network: true
 Plugin Name: LDC Functions
 Plugin URI: https://github.com/luisdelcid/ldc-functions
 Text Domain: ldc-functions
-Version: 0.2.19.5
+Version: 0.2.19.6
 */
 
 if(defined('ABSPATH')){
@@ -19,6 +19,7 @@ if(defined('ABSPATH')){
     register_deactivation_hook(__FILE__, 'ldc_deactivation');
     $ldc_file = trailingslashit(WPMU_PLUGIN_DIR) . 'ldc-preloader.php';
     if(file_exists($ldc_file)){
+        ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
         ldc_enqueue_functions('admin');
         ldc_enqueue_functions('front-end');
         ldc_on('after_setup_theme', function(){
@@ -28,7 +29,6 @@ if(defined('ABSPATH')){
             }
         });
         ldc_on('plugins_loaded', function(){
-            ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
             ldc_do('ldc_functions_loaded');
         });
     }
