@@ -10,11 +10,11 @@ Network: true
 Plugin Name: LDC Functions
 Plugin URI: https://github.com/luisdelcid/ldc-functions
 Text Domain: ldc-functions
-Version: 0.2.19.3
+Version: 0.2.19.4
 */
 
 if(defined('ABSPATH')){
-    require_once(plugin_dir_path(__FILE__) . 'functions.php');
+    require_once(plugin_dir_path(__FILE__) . 'functions/functions.php');
     register_activation_hook(__FILE__, 'ldc_activation');
     register_deactivation_hook(__FILE__, 'ldc_deactivation');
     $ldc_file = trailingslashit(WPMU_PLUGIN_DIR) . 'ldc-preloader.php';
