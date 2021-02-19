@@ -17,10 +17,8 @@ if(!function_exists('ldc_add_admin_notice')){
     		$GLOBALS['ldc_admin_notices'][] = '<div class="notice notice-' . $class . '"><p>' . $admin_notice . '</p></div>';
         }
 		ldc_one('admin_notices', function(){
-			if($GLOBALS['ldc_admin_notices']){
-				foreach($GLOBALS['ldc_admin_notices'] as $admin_notice){
-					echo $admin_notice;
-				}
+			foreach($GLOBALS['ldc_admin_notices'] as $admin_notice){
+				echo $admin_notice;
 			}
 		});
 	}
@@ -80,11 +78,12 @@ if(!function_exists('ldc_base64_urlencode')){
 
 if(!function_exists('ldc_clone_role')){
 	function ldc_clone_role($source = '', $destination = '', $display_name = ''){
-        if($source and $destination and $display_name){
-            $role = get_role($source);
-            $capabilities = $role->capabilities;
-            add_role($destination, $display_name, $capabilities);
-        }
+		$role = get_role($source);
+		if($role){
+			$capabilities = $role->capabilities;
+			return add_role($destination, $display_name, $capabilities);
+		}
+		return null;
 	}
 }
 
@@ -168,8 +167,7 @@ if(!function_exists('ldc_get_memory_size')){
 	    }
 	    exec('free -b', $output);
 	    $output = $output[1];
-	    $output = preg_replace('/\s+/', ' ', $output);
-	    $output = trim($output);
+	    $output = trim(preg_replace('/\s+/', ' ', $output));
 	    $output = explode(' ', $output);
 	    $output = $output[1];
 	    return absint($output);
@@ -211,10 +209,10 @@ if(!function_exists('ldc_is_plugin_active')){
 if(!function_exists('ldc_is_plugin_deactivating')){
     function ldc_is_plugin_deactivating($file = ''){
         global $pagenow;
-        if(!is_file($file)){
-            $file = __FILE__;
+        if(is_file($file)){
+            return (is_admin() and $pagenow == 'plugins.php' and isset($_GET['action'], $_GET['plugin']) and $_GET['action'] == 'deactivate' and $_GET['plugin'] == plugin_basename($file));
         }
-        return (is_admin() and $pagenow == 'plugins.php' and isset($_GET['action'], $_GET['plugin']) and $_GET['action'] == 'deactivate' and $_GET['plugin'] == plugin_basename($file));
+        return false;
     }
 }
 
@@ -272,25 +270,6 @@ if(!function_exists('ldc_md5_to_uuid4')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_new')){
-    function ldc_new(...$args){
-        if(!$args){
-            return null;
-        }
-        $class_name = array_shift($args);
-        if(!class_exists($class_name)){
-            return null;
-        }
-        if($args){
-            return new $class_name(...$args);
-        } else {
-            return new $class_name;
-        }
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_off')){
     function ldc_off($tag = '', $function_to_add = '', $priority = 10){
         return remove_filter($tag, $function_to_add, $priority);
@@ -312,7 +291,7 @@ if(!function_exists('ldc_one')){
     function ldc_one($tag = '', $function_to_add = '', $priority = 10, $accepted_args = 1){
 		static $hooks = [];
 		$idx = _wp_filter_build_unique_id($tag, $function_to_add, $priority);
-		if($function_to_add instanceof \Closure){
+		if($function_to_add instanceof Closure){
 			$md5 = ldc_md5_closure($function_to_add);
 		} else {
 			$md5 = md5($idx);
@@ -380,15 +359,6 @@ if(!function_exists('ldc_remove_whitespaces')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(!function_exists('ldc_seems_json')){
-    function ldc_seems_json($str = ''){
-        $str = ldc_remove_whitespaces($str);
-        return (is_string($str) and (preg_match('/^\{\s*\".+\"\s*\:.*\}$/', $str) or preg_match('/^\[.*\]$/', $str)));
-    }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 if(!function_exists('ldc_signon_without_password')){
     function ldc_signon_without_password($username_or_email = '', $remember = false){
         if(is_user_logged_in()){
@@ -400,37 +370,21 @@ if(!function_exists('ldc_signon_without_password')){
                     if(!$user){
 						$user = get_user_by('email', $username_or_email);
 	                    if(!$user){
-	                        return new WP_Error('does_not_exist', __('The requested user does not exist.'));
+	                        return ldc_error('does_not_exist', __('The requested user does not exist.'));
 	                    }
                     }
                 }
                 return $user;
             }, 10, 2);
             $user = wp_signon([
+				'remember' => $remember,
                 'user_login' => $username_or_email,
                 'user_password' => '',
-                'remember' => $remember,
             ]);
             ldc_off('authenticate', $hook);
             return $user;
         }
     }
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-if(!function_exists('ldc_trim_excerpt')){
-	function ldc_trim_excerpt($text = '', $excerpt_length = 55, $excerpt_more = ' [&hellip;]'){
-	   $raw_excerpt = $text;
-	   $text = strip_shortcodes($text);
-	   $text = excerpt_remove_blocks($text);
-	   $text = apply_filters('the_content', $text);
-	   $text = str_replace(']]>', ']]&gt;', $text);
-	   $excerpt_length = (int) apply_filters('excerpt_length', $excerpt_length);
-	   $excerpt_more = apply_filters('excerpt_more', $excerpt_more);
-	   $text = wp_trim_words($text, $excerpt_length, $excerpt_more);
-	   return apply_filters('wp_trim_excerpt', $text, $raw_excerpt);
-	}
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

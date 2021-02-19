@@ -9,7 +9,7 @@ if(!class_exists('LDC_Request')){
         //
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        protected $url = '', $args = [];
+        protected $args = [], $url = '';
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -33,8 +33,8 @@ if(!class_exists('LDC_Request')){
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         public function __construct($url = '', $args = []){
-            $this->url = $url;
             $this->args = $args;
+            $this->url = $url;
         }
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +54,7 @@ if(!class_exists('LDC_Request')){
             if($this->args['filename']){
                 $filename = basename($this->args['filename']);
                 if(strpos($this->args['filename'], $wp_upload_dir['basedir']) !== 0){
-                    return ldc_new('WP_Error', 'ldc_download_invalid_directory', 'Invalid directory.');
+                    return ldc_error('http_request_failed', 'Destination directory for file streaming is not valid.');
                 }
             } else {
                 $filename = preg_replace('/\?.*/', '', basename($this->url));
@@ -62,7 +62,7 @@ if(!class_exists('LDC_Request')){
             $filetype_and_ext = wp_check_filetype($filename);
             $type = $filetype_and_ext['type'];
             if(!$type){
-                return ldc_new('WP_Error', 'ldc_download_invalid_filename', 'Invalid filename.');
+                return ldc_error('http_request_failed', 'Filename is not valid.');
             }
             if(!$this->args['filename']){
                 $filename = wp_unique_filename($wp_upload_dir['path'], $filename);
@@ -79,7 +79,7 @@ if(!class_exists('LDC_Request')){
             $type = $filetype_and_ext['type'];
             if(!$type){
                 @unlink($this->args['filename']);
-                return ldc_new('WP_Error', 'ldc_download_invalid_filetype', 'Invalid filetype.');
+                return ldc_error('http_request_failed', 'Filetype is not valid.');
             }
             $post_id = wp_insert_attachment([
                 'guid' => str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $this->args['filename']),

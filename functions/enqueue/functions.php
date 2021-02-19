@@ -7,19 +7,19 @@ if(!function_exists('ldc_enqueue_bootstrap')){
         ldc_one('wp_enqueue_scripts', function() use($ver, $bundle){
             switch($ver){
                 case 4:
-                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css', [], '4.5.3');
+                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css', [], '4.6.0');
                     if($bundle){
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js', ['jquery'], '4.5.3', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js', ['jquery'], '4.6.0', true);
                     } else {
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js', ['jquery'], '4.5.3', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js', ['jquery'], '4.6.0', true);
                     }
                     break;
                 case 5:
-                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css', [], '5.0.0-beta1');
+                    wp_enqueue_style('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css', [], '5.0.0-beta2');
                     if($bundle){
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js', [], '5.0.0-beta1', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js', [], '5.0.0-beta2', true);
                     } else {
-                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js', [], '5.0.0-beta1', true);
+                        wp_enqueue_script('bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js', [], '5.0.0-beta2', true);
                     }
                     break;
             }
@@ -52,9 +52,9 @@ if(!function_exists('ldc_enqueue_fontawesome')){
                     break;
                 case 5:
                     if($pro){
-                        wp_enqueue_style('fontawesome', 'https://pro.fontawesome.com/releases/v5.15.1/css/all.css', [], '5.15.1');
+                        wp_enqueue_style('fontawesome', 'https://pro.fontawesome.com/releases/v5.15.2/css/all.css', [], '5.15.2');
                     } else {
-                        wp_enqueue_style('fontawesome', 'https://use.fontawesome.com/releases/v5.15.1/css/all.css', [], '5.15.1');
+                        wp_enqueue_style('fontawesome', 'https://use.fontawesome.com/releases/v5.15.2/css/all.css', [], '5.15.2');
                     }
                     break;
             }
@@ -82,18 +82,16 @@ if(!function_exists('ldc_enqueue_fontawesome_kit')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_enqueue_functions')){
-    function ldc_enqueue_functions($context = 'front-end'){
-        $file = plugin_dir_path(__FILE__) . 'functions.js';
-        $ver = filemtime($file);
+    function ldc_enqueue_functions($context = ''){
         switch($context){
             case 'admin':
-                ldc_one('admin_enqueue_scripts', function() use($ver){
-                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
+                ldc_one('admin_enqueue_scripts', function(){
+                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], filemtime(plugin_dir_path(__FILE__) . 'functions.js'), true);
                 });
                 break;
             case 'front-end':
-                ldc_one('wp_enqueue_scripts', function() use($ver){
-                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], $ver, true);
+                ldc_one('wp_enqueue_scripts', function(){
+                    wp_enqueue_script('ldc-functions', plugin_dir_url(__FILE__) . 'functions.js', ['jquery'], filemtime(plugin_dir_path(__FILE__) . 'functions.js'), true);
                 });
                 break;
         }
@@ -122,7 +120,7 @@ if(!function_exists('ldc_enqueue_popper')){
                     wp_enqueue_script('popper', 'https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js', [], '1.16.1', true);
                     break;
                 case 2:
-                    wp_enqueue_script('popper', 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js', [], '2.5.4', true);
+                    wp_enqueue_script('popper', 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js', [], '2.6.0', true);
                     break;
             }
         });

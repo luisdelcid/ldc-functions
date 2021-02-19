@@ -42,7 +42,7 @@ if(!class_exists('LDC_Response')){
         //
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        public $code = 500, $data = '', $message = '', $raw_data = '', $raw_response = null, $success = false;
+        public $code = 0, $data = '', $message = '', $raw_data = '', $raw_response = null, $success = false;
 
         // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -107,7 +107,7 @@ if(!class_exists('LDC_Response')){
             if(is_wp_error($this->raw_response)){
                 return $this->raw_response;
             } else {
-                return ldc_new('WP_Error', 'ldc_response_error', $this->message, [
+                return ldc_error('http_request_failed', $this->message, [
                     'status' => $this->code,
                 ]);
             }

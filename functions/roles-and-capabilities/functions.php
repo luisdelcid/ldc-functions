@@ -62,7 +62,7 @@ if(!function_exists('ldc_hide_the_frontend')){
                 auth_redirect();
             } else {
                 if(!current_user_can($capability)){
-                    wp_die('<h1>' . __('You need a higher level of permission.') . '</h1>' . '<p>' . __('Sorry, you are not allowed to access this page.') . '</p>', 403);
+                    wp_die('<h1>' . __('You need a higher level of permission.') . '</h1><p>' . __('Sorry, you are not allowed to access this page.') . '</p>', 403);
                 }
             }
         });
@@ -78,7 +78,7 @@ if(!function_exists('ldc_hide_the_rest_api')){
                 return $error;
             }
             if(!current_user_can($capability)){
-                return new WP_Error('rest_user_cannot_view', __('You need a higher level of permission.'), [
+                return ldc_error('rest_user_cannot_view', __('You need a higher level of permission.'), [
                     'status' => 401,
                 ]);
             }

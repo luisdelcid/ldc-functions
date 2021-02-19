@@ -35,7 +35,7 @@ if(!function_exists('ldc_support_sessions')){
 			if(session_id()){
         		session_destroy();
         	}
-		});
+		}, 9);
 	}
 }
 
