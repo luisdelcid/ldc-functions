@@ -23,8 +23,8 @@ Version:
 if(defined('WP_PLUGIN_DIR') and function_exists('trailingslashit')){
     if(file_exists(trailingslashit(WP_PLUGIN_DIR) . 'ldc-functions/ldc-functions.php')){
         if((function_exists('get_option') and in_array('ldc-functions/ldc-functions.php', (array) get_option('active_plugins'))) or (function_exists('get_site_option') and array_key_exists('ldc-functions/ldc-functions.php', (array) get_site_option('active_sitewide_plugins')))){
-            \$ldc_dir = trailingslashit(WP_PLUGIN_DIR) . 'ldc-functions/';
-            foreach(glob(\$ldc_dir . 'functions/*', GLOB_ONLYDIR) as \$ldc_dir){
+            \$ldc_dir = trailingslashit(WP_PLUGIN_DIR) . 'ldc-functions/functions/';
+            foreach(glob(\$ldc_dir . '*', GLOB_ONLYDIR) as \$ldc_dir){
                 if(file_exists(\$ldc_dir . '/functions.php')){
                     require_once(\$ldc_dir . '/functions.php');
                 }

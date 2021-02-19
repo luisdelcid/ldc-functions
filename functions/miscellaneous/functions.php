@@ -131,6 +131,18 @@ if(!function_exists('ldc_destroy_other_sessions')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+function ldc_error($code = '', $message = '', $data = ''){
+	if(!$code){
+		$code = 'error';
+	}
+	if(!$message){
+		$message = __('Something went wrong.');
+	}
+	return new WP_Error($code, $message, $data);
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_format_function')){
 	function ldc_format_function($function_name = '', $args = []){
 		$str = '';

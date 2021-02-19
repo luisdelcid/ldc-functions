@@ -28,14 +28,14 @@ if(!function_exists('ldc_download_and_unzip')){
             return ldc_error('http_request_failed', 'Could not access filesystem directly.');
         }
         if(!WP_Filesystem()){
-            return ldc_error('http_request_failed', 'Could not access filesystem.');
+            return ldc_error('http_request_failed', __('Could not access filesystem.'));
         }
         $attachment_id = ldc_download($url, $args);
         if(is_wp_error($attachment_id)){
             return $attachment_id;
         }
         if(!wp_mkdir_p($dir)){
-            return ldc_error('http_request_failed', 'Could not create directory.');
+            return ldc_error('http_request_failed', __('Could not create directory.'));
         }
         $result = unzip_file(get_attached_file($attachment_id), $dir);
         if(is_wp_error($result)){
