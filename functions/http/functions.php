@@ -37,7 +37,7 @@ if(!function_exists('ldc_download_and_unzip')){
         if(!wp_mkdir_p($dir)){
             return ldc_error('http_request_failed', 'Could not create directory.');
         }
-        $result = unzip_file($file, $dir);
+        $result = unzip_file(get_attached_file($attachment_id), $dir);
         if(is_wp_error($result)){
             $wp_filesystem->rmdir($dir, true);
             return $result;
