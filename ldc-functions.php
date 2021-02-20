@@ -20,16 +20,18 @@ if(defined('ABSPATH')){
         }
     }
     unset($ldc_dir);
-    ldc_enqueue_functions('admin');
-    ldc_enqueue_functions('front-end');
-    ldc_on('after_setup_theme', function(){
-        $file = get_stylesheet_directory() . '/ldc-functions.php';
-        if(file_exists($file)){
-            require_once($file);
+    add_action('plugins_loaded', function(){
+        if(!ldc_is_doing_heartbeat()){
+            ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
+            ldc_enqueue_functions('admin');
+            ldc_enqueue_functions('front-end');
+            ldc_on('after_setup_theme', function(){
+                $file = get_stylesheet_directory() . '/ldc-functions.php';
+                if(file_exists($file)){
+                    require_once($file);
+                }
+            });
+            ldc_do('ldc_functions');
         }
-    });
-    ldc_on('plugins_loaded', function(){
-        ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
-        ldc_do('ldc_functions');
     });
 }
