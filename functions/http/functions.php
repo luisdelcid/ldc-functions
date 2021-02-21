@@ -47,7 +47,9 @@ if(!function_exists('ldc_download_and_unzip')){
         }
         if(empty($args['filename'])){
             $filename = preg_replace('/\?.*/', '', basename($url));
-            $dest = ldc_upload_basedir() . '/tmp/' . wp_unique_filename(ldc_upload_basedir() . '/tmp/', $filename);
+            $tmp = ldc_upload_basedir() . '/tmp';
+            wp_mkdir_p($tmp);
+            $dest = $tmp . '/' . wp_unique_filename($tmp . '/', $filename);
         } else {
             $dest = $args['filename'];
             unset($args['filename']);
@@ -56,10 +58,7 @@ if(!function_exists('ldc_download_and_unzip')){
         if(is_wp_error($file)){
             return $file;
         }
-        if(!wp_mkdir_p($dir)){
-            @unlink($file);
-            return ldc_error('http_request_failed', __('Could not create directory.'));
-        }
+        wp_mkdir_p($dir);
         $result = unzip_file($file, $dir);
         if(is_wp_error($result)){
             @unlink($file);

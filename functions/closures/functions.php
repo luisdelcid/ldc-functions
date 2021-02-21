@@ -6,6 +6,9 @@ if(!function_exists('ldc_md5_closure')){
     function ldc_md5_closure($data = '', $spl_object_hash = false){
         if($data instanceof Closure){
 			$serialized = ldc_serialize_closure($data);
+            if(is_wp_error($serialized)){
+                return $serialized;
+            }
 			if(!$spl_object_hash){
 				$serialized = str_replace(spl_object_hash($data), 'spl_object_hash', $serialized);
 			}

@@ -33,6 +33,9 @@ if(!function_exists('ldc_one')){
 		$idx = _wp_filter_build_unique_id($tag, $function_to_add, $priority);
 		if($function_to_add instanceof Closure){
 			$md5 = ldc_md5_closure($function_to_add);
+            if(is_wp_error($md5)){
+                $md5 = md5($idx);
+            }
 		} else {
 			$md5 = md5($idx);
 		}
