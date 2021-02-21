@@ -20,7 +20,7 @@ if(!function_exists('ldc_add_admin_notice')){
 			foreach($GLOBALS['ldc_admin_notices'] as $admin_notice){
 				echo $admin_notice;
 			}
-		});
+		}, 11);
 	}
 }
 

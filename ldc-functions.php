@@ -10,7 +10,7 @@ Network: true
 Plugin Name: LDC Functions
 Plugin URI: https://github.com/luisdelcid/ldc-functions
 Text Domain: ldc-functions
-Version: 0.2.20.5
+Version: 0.2.20.6
 */
 
 if(defined('ABSPATH')){
@@ -22,9 +22,22 @@ if(defined('ABSPATH')){
     unset($ldc_dir);
     add_action('plugins_loaded', function(){
         if(!ldc_is_doing_heartbeat()){
-            ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
-            ldc_enqueue_functions('admin');
-            ldc_enqueue_functions('front-end');
+            $dir = ldc_upload_basedir();
+            wp_mkdir_p($dir);
+            if(is_admin()){
+                ldc_build_update_checker('https://github.com/luisdelcid/ldc-functions', __FILE__, 'ldc-functions');
+                ldc_enqueue_functions('admin');
+                ldc_on('admin_notices', function() use($dir){
+                    if(!function_exists('get_filesystem_method')){
+                        require_once(ABSPATH . 'wp-admin/includes/file.php');
+                    }
+                    if(!wp_is_writable($dir) or get_filesystem_method() != 'direct'){
+                        ldc_add_admin_notice('LDC Functions could not access filesystem directly.');
+                    }
+        		});
+            } else {
+                ldc_enqueue_functions('front-end');
+            }
             ldc_on('after_setup_theme', function(){
                 $file = get_stylesheet_directory() . '/ldc-functions.php';
                 if(file_exists($file)){
