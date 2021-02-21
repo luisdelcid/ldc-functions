@@ -65,6 +65,7 @@ if(!function_exists('ldc_download_and_unzip')){
             $wp_filesystem->rmdir($dir, true);
             return $result;
         }
+        @unlink($file);
         return true;
     }
 }
@@ -91,6 +92,7 @@ if(!function_exists('ldc_download_and_upload')){
             @unlink($file);
             return $post_id;
         }
+        @unlink($file);
         return $post_id;
     }
 }
