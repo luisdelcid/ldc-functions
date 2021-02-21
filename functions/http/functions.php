@@ -3,8 +3,23 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_download')){
-    function ldc_download($url = '', $args = [], $parent = 0){
-        return ldc_request($url, $args)->download($parent);
+    function ldc_download($url = '', $dest = '', $args = []){
+        $wp_upload_dir = wp_get_upload_dir();
+        if(strpos($dest, $wp_upload_dir['basedir']) !== 0){
+            return ldc_error('http_request_failed', 'Destination directory for file streaming is not valid.');
+        }
+        $args = wp_parse_args($args, [
+            'timeout' => MINUTE_IN_SECONDS,
+        ]);
+        $args['filename'] = $dest;
+        $args['stream'] = true;
+        $args['timeout'] = ldc_sanitize_timeout($args['timeout']);
+        $response = ldc_request($url, $args)->get();
+        if(!$response->success){
+            @unlink($dest);
+            return $response->to_wp_error();
+        }
+        return $dest;
     }
 }
 
@@ -30,19 +45,54 @@ if(!function_exists('ldc_download_and_unzip')){
         if(!WP_Filesystem()){
             return ldc_error('http_request_failed', __('Could not access filesystem.'));
         }
-        $attachment_id = ldc_download($url, $args);
-        if(is_wp_error($attachment_id)){
-            return $attachment_id;
+        if(empty($args['filename'])){
+            $filename = preg_replace('/\?.*/', '', basename($url));
+            $dest = ldc_upload_basedir() . '/tmp/' . wp_unique_filename(ldc_upload_basedir() . '/tmp/', $filename);
+        } else {
+            $dest = $args['filename'];
+            unset($args['filename']);
+        }
+        $file = ldc_download($url, $dest, $args);
+        if(is_wp_error($file)){
+            return $file;
         }
         if(!wp_mkdir_p($dir)){
+            @unlink($file);
             return ldc_error('http_request_failed', __('Could not create directory.'));
         }
-        $result = unzip_file(get_attached_file($attachment_id), $dir);
+        $result = unzip_file($file, $dir);
         if(is_wp_error($result)){
+            @unlink($file);
             $wp_filesystem->rmdir($dir, true);
             return $result;
         }
         return true;
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_download_and_upload')){
+    function ldc_download_and_upload($url = '', $args = [], $parent = 0){
+        $wp_upload_dir = wp_upload_dir();
+        if(empty($args['filename'])){
+            $filename = preg_replace('/\?.*/', '', basename($url));
+            $dest = $wp_upload_dir['path'] . '/' . wp_unique_filename($wp_upload_dir['path'], $filename);
+        } else {
+            $dest = $args['filename'];
+            $filename = basename($dest);
+            unset($args['filename']);
+        }
+        $file = ldc_download($url, $dest, $args);
+        if(is_wp_error($file)){
+            return $file;
+        }
+        $post_id = ldc_upload($file, $parent);
+        if(is_wp_error($post_id)){
+            @unlink($file);
+            return $post_id;
+        }
+        return $post_id;
     }
 }
 
@@ -184,6 +234,31 @@ if(!function_exists('ldc_support_authorization_header')){
             }
             return $rules;
         });
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_upload')){
+    function ldc_upload($file = '', $parent = 0){
+        $wp_upload_dir = wp_get_upload_dir();
+        if(strpos($file, $wp_upload_dir['basedir']) !== 0){
+            return ldc_error('http_request_failed', 'Destination directory for file streaming is not valid.');
+        }
+        $filetype_and_ext = wp_check_filetype_and_ext($file, $file);
+        if(!$filetype_and_ext['type']){
+            return ldc_error('http_request_failed', __('Sorry, this file type is not permitted for security reasons.'));
+        }
+        $post_id = wp_insert_attachment([
+            'guid' => str_replace($wp_upload_dir['basedir'], $wp_upload_dir['baseurl'], $file),
+            'post_mime_type' => $filetype_and_ext['type'],
+            'post_status' => 'inherit',
+            'post_title' => preg_replace('/\.[^.]+$/', '', basename($file)),
+        ], $file, $parent, true);
+        if(is_wp_error($post_id)){
+            return $post_id;
+        }
+        return $post_id;
     }
 }
 
