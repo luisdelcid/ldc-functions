@@ -83,13 +83,13 @@ if(!function_exists('ldc_cl_upload')){
             return $use;
         }
         $md5 = ldc_md5($options);
-        $image = get_post_meta($attachment_id, '_ifwp_cl_' . $md5, true);
+        $image = get_post_meta($attachment_id, '_ldc_cl_' . $md5, true);
         if(!$image){
             $image = Cloudinary\Uploader::upload(get_attached_file($attachment_id), $options);
             if($image instanceof Cloudinary\Error){
                 return ldc_error('cloudinary_error', $image->getMessage());
             }
-            update_post_meta($attachment_id, '_ifwp_cl_' . $md5, $image);
+            update_post_meta($attachment_id, '_ldc_cl_' . $md5, $image);
         }
         return $image;
     }
