@@ -58,6 +58,10 @@ if(!function_exists('ldc_download_and_unzip')){
         if(is_wp_error($file)){
             return $file;
         }
+        if(!ldc_seems_zip($file)){
+            @unlink($file);
+            return ldc_error('http_request_failed', __('File type is not valid.'));
+        }
         wp_mkdir_p($dir);
         $result = unzip_file($file, $dir);
         if(is_wp_error($result)){
@@ -221,6 +225,20 @@ if(!function_exists('ldc_seems_successful')){
 if(!function_exists('ldc_seems_wp_http_requests_response')){
     function ldc_seems_wp_http_requests_response($response = []){
         return (ldc_array_keys_exist(['headers', 'body', 'response', 'cookies', 'filename', 'http_response'], $response) and ($response['http_response'] instanceof WP_HTTP_Requests_Response));
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if(!function_exists('ldc_seems_zip')){
+    function ldc_seems_zip($filename = ''){
+        $filetype = wp_check_filetype($filename, [
+            'zip' => 'application/zip',
+        ]);
+        if(!$filetype['type']){
+            return false;
+        }
+        return true;
     }
 }
 
