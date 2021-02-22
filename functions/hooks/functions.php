@@ -2,6 +2,14 @@
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_did')){
+    function ldc_did($tag = ''){
+        return did_action($tag);
+    }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_do')){
     function ldc_do($tag = '', ...$args){
         return do_action($tag, ...$args);
