@@ -54,13 +54,12 @@ if(!function_exists('ldc_download_and_unzip')){
             $dest = $args['filename'];
             unset($args['filename']);
         }
+        if(!ldc_seems_zip($dest)){
+            return ldc_error('http_request_failed', __('File type is not valid.'));
+        }
         $file = ldc_download($url, $dest, $args);
         if(is_wp_error($file)){
             return $file;
-        }
-        if(!ldc_seems_zip($file)){
-            @unlink($file);
-            return ldc_error('http_request_failed', __('File type is not valid.'));
         }
         wp_mkdir_p($dir);
         $result = unzip_file($file, $dir);
