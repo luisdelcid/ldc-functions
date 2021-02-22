@@ -49,7 +49,7 @@ if(!function_exists('ldc_download_and_unzip')){
             $filename = preg_replace('/\?.*/', '', basename($url));
             $tmp = ldc_upload_basedir() . '/tmp';
             wp_mkdir_p($tmp);
-            $dest = $tmp . '/' . wp_unique_filename($tmp . '/', $filename);
+            $dest = $tmp . '/' . $filename;
         } else {
             $dest = $args['filename'];
             unset($args['filename']);
