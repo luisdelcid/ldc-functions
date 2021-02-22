@@ -65,6 +65,14 @@ if(!function_exists('ldc_cl_add_image_size')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_cl_config')){
+    function ldc_cl_config($config = []){
+		return ldc_use_cloudinary_php($config);
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_cl_upload')){
     function ldc_cl_upload($attachment_id = 0, $options = []){
         if(!wp_attachment_is_image($attachment_id)){
@@ -90,7 +98,7 @@ if(!function_exists('ldc_cl_upload')){
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 if(!function_exists('ldc_use_cloudinary_php')){
-    function ldc_use_cloudinary_php(){
+    function ldc_use_cloudinary_php($config = []){
         if(class_exists('Cloudinary')){
             return true;
         }
@@ -98,6 +106,17 @@ if(!function_exists('ldc_use_cloudinary_php')){
         $expected = $dir . '/cloudinary_php-1.20.0';
         if(is_dir($expected)){
             require_once($expected . '/autoload.php');
+			if($config){
+				Cloudinary::config($config);
+			} else {
+				if(defined('LDC_CL_API_KEY') and defined('LDC_CL_API_SECRET') and defined('LDC_CL_CLOUD_NAME')){
+					Cloudinary::config([
+						'api_key' => LDC_CL_API_KEY,
+						'api_secret' => LDC_CL_API_SECRET,
+						'cloud_name' => LDC_CL_CLOUD_NAME,
+					]);
+				}
+			}
             return true;
         }
         $url = 'https://github.com/cloudinary/cloudinary_php/archive/1.20.0.zip';
