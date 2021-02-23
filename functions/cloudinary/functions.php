@@ -65,6 +65,16 @@ if(!function_exists('ldc_cl_add_image_size')){
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+if(!function_exists('ldc_cl_config')){
+    function ldc_cl_config($config = []){
+		if(ldc_array_keys_exist(['api_key', 'api_secret', 'cloud_name'], $config) and !is_wp_error(ldc_use_cloudinary_php())){
+			Cloudinary::config($config);
+		}
+	}
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 if(!function_exists('ldc_cl_upload')){
     function ldc_cl_upload($attachment_id = 0, $options = []){
         if(!wp_attachment_is_image($attachment_id)){
