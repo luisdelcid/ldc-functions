@@ -123,16 +123,16 @@ if(!function_exists('ldc_use_google_api')){
             return ldc_error('google_api_error', 'Google API doesn&#8217;t work with your version of PHP.');
         }
         $dir = ldc_upload_basedir() . '/github/googleapis/google-api-php-client/2.9.1/' . $php_version;
-        $expected = $dir . '/google-api-php-client--PHP' . $php_version;
+        $expected = $dir . '/vendor';
         if(is_dir($expected)){
-            require_once($expected . '/vendor/autoload.php');
+            require_once($expected . '/autoload.php');
             return true;
         }
         $result = ldc_download_and_unzip($dir, $url);
         if(is_wp_error($result)){
             return $result;
         }
-        require_once($expected . '/vendor/autoload.php');
+        require_once($expected . '/autoload.php');
         return true;
     }
 }
