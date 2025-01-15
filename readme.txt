@@ -5,19 +5,19 @@ Tags: ldc, functions
 Tested up to: 6.7.1
 Requires at least: 5.6
 Requires PHP: 5.6
-Stable tag: 0.1.15.1
+Stable tag: 0.1.15.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A personal collection of useful functions for WordPress plugins and themes.
+A collection of functions for WordPress plugins and themes.
 
 == Description ==
 
-A personal collection of useful functions for WordPress plugins and themes.
+A collection of functions for WordPress plugins and themes.
 
-= Functions for plugins =
+= For plugin developers: =
 
-Add the following code to the main plugin file:
+1. Add the following code to the main plugin file:
 
 `add_action('plugins_loaded', function(){`
 `    if(did_action('ldc_functions')){`
@@ -25,9 +25,11 @@ Add the following code to the main plugin file:
 `    }`
 `});`
 
-= Functions for themes =
+= For theme developers: =
 
-Create a new file named `ldc-functions.php` and add your custom code there or add the following code to the functions.php file:
+1. Create a new file named `ldc-functions.php` and add your custom code there.
+
+2. Add the following code to the functions.php file:
 
 `if(did_action('ldc_functions')){`
 `    'Add your custom code here...';`
