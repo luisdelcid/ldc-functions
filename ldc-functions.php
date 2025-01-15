@@ -1,13 +1,13 @@
 <?php
 /*
  * Plugin Name: LDC Functions
- * Plugin URI: https://luisdelcid.com
+ * Plugin URI: https://github.com/luisdelcid/ldc-functions
  * Description: A personal collection of useful functions for WordPress plugins and themes.
  * Version: 0.1.15
  * Requires at least: 5.6
  * Requires PHP: 5.6
  * Author: Luis del Cid
- * Author URI: https://github.com/luisdelcid
+ * Author URI: https://luisdelcid.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: ldc-functions
