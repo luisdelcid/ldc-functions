@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: LDC Functions
- * Plugin URI: https://github.com/luisdelcid/ldc-functions
+ * Plugin URI: https://luisdelcid.com
  * Description: A personal collection of useful functions for WordPress plugins and themes.
  * Version: 0.1.14
  * Requires at least: 5.6
