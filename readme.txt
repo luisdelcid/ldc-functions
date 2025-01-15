@@ -19,13 +19,19 @@ A personal collection of useful functions for WordPress plugins and themes.
 
 Add the following code to the main plugin file:
 
-`add_action('plugins_loaded', function(){ if(did_action('ldc_functions')){ 'Add your custom code here...'; } });`
+`add_action('plugins_loaded', function(){`
+`    if(did_action('ldc_functions')){`
+`        'Add your custom code here...';`
+`    }`
+`});`
 
 = Functions for themes =
 
 Create a new file named `ldc-functions.php` and add your custom code there or add the following code to the functions.php file:
 
-`if(did_action('ldc_functions')){ 'Add your custom code here...'; }`
+`if(did_action('ldc_functions')){`
+`    'Add your custom code here...';`
+`}`
 
 PS: The `after_ldc_functions` action hook is the **first action hook available to themes**, triggered immediately after the `after_setup_theme` action hook is fired.
 
