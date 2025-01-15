@@ -33,7 +33,7 @@ Create a new file named `ldc-functions.php` and add your custom code there or ad
 `    'Add your custom code here...';`
 `}`
 
-PS: The `after_ldc_functions` action hook is the **first action hook available to themes**, triggered immediately after the `after_setup_theme` action hook is fired.
+Note that `after_ldc_functions` is the **first action hook available to themes**, instead of `after_setup_theme`.
 
 == Changelog ==
 
