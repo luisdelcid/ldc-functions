@@ -3,7 +3,7 @@
  * Plugin Name: LDC Functions
  * Plugin URI: https://github.com/luisdelcid/ldc-functions
  * Description: A personal collection of useful functions for WordPress plugins and themes.
- * Version: 0.1.15
+ * Version: 0.1.15.1
  * Requires at least: 5.6
  * Requires PHP: 5.6
  * Author: Luis del Cid
