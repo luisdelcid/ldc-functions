@@ -103,7 +103,7 @@ if(!function_exists('ldc_enqueue_functions')){
 		ldc_omni_enqueue('stackframe', 'https://cdn.jsdelivr.net/npm/stackframe@1.3.4/stackframe.min.js', [], '1.3.4');
         ldc_omni_enqueue('error-stack-parser', 'https://cdn.jsdelivr.net/npm/error-stack-parser@2.1.4/error-stack-parser.min.js', ['stackframe'], '2.1.4');
 		$handle = 'ldc-singleton'; // Hardcoded.
-        $file = plugin_dir_path(__FILE__) . 'singleton.js'; // Hardcoded.
+        $file = plugin_dir_path(__FILE__) . 'class-singleton.js'; // Hardcoded.
         ldc_local_omni_enqueue($handle, $file);
         $handle = 'ldc-functions'; // Hardcoded.
         $file = plugin_dir_path(__FILE__) . 'functions.js'; // Hardcoded.
@@ -3986,7 +3986,7 @@ if(!function_exists('ldc_add_hiding_rule')){
     		return;
     	}
         $atts = [];
-        $path = ldc_shortinit_dir() . '/readfile.php';
+        $path = ldc_shortinit_dir() . '/files.php';
     	$tmp = str_replace(wp_normalize_path(ABSPATH), '', wp_normalize_path($path));
     	$parts = explode('/', $tmp);
     	$levels = count($parts);
